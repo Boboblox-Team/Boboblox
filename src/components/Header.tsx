@@ -1,10 +1,32 @@
-import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Menu, X, LogOut } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { supabase } from "@/integrations/supabase/client";
+import { User } from "@supabase/supabase-js";
 import bobobloxLogo from "@/assets/boboblox-logo.png";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        setUser(session?.user ?? null);
+      }
+    );
+
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+  };
 
   const navLinks = [
     { name: "Home", href: "#home" },
@@ -38,7 +60,16 @@ const Header = () => {
               {link.name}
             </a>
           ))}
-          <Button variant="hero">Get Started</Button>
+          {user ? (
+            <Button variant="ghost" onClick={handleLogout} className="gap-2">
+              <LogOut size={18} />
+              Sign Out
+            </Button>
+          ) : (
+            <Link to="/auth">
+              <Button variant="hero">Get Started</Button>
+            </Link>
+          )}
         </nav>
 
         {/* Mobile Menu Toggle */}
@@ -65,9 +96,18 @@ const Header = () => {
                 {link.name}
               </a>
             ))}
-            <Button variant="hero" className="w-full mt-2">
-              Get Started
-            </Button>
+            {user ? (
+              <Button variant="ghost" onClick={handleLogout} className="w-full mt-2 gap-2">
+                <LogOut size={18} />
+                Sign Out
+              </Button>
+            ) : (
+              <Link to="/auth" onClick={() => setIsMenuOpen(false)}>
+                <Button variant="hero" className="w-full mt-2">
+                  Get Started
+                </Button>
+              </Link>
+            )}
           </nav>
         </div>
       )}
