@@ -1,73 +1,101 @@
-# Welcome to Boboblox
+# 🎮 Boboblox
 
-## Project info
+<img src="https://github.com/user-attachments/assets/9d30b44f-a175-424b-bad3-d34fee1d6991" width="200" alt="Boboblox Logo" />
 
-**URL**: https://lovable.dev/projects/d6b6fc7a-de40-428c-a717-37bf2d2ba6b3
+Boboblox is a kid‑friendly gaming platform where players can explore worlds, play games, customize avatars, and unlock special features.
+This README provides an overview of the platform, its features, and its systems.
 
-## How can I edit this code?
+---
 
-There are several ways of editing your application.
+# 🧩 About Boboblox
 
-**Use Lovable**
+Boboblox is designed to be a safe, creative, and fun environment for kids.  
+Players can:
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/d6b6fc7a-de40-428c-a717-37bf2d2ba6b3) and start prompting.
+- Explore different worlds  
+- Play mini‑games  
+- Customize their avatars  
+- Earn or buy Bobobux  
+- Unlock items and accessories  
 
-Changes made via Lovable will be committed automatically to this repo.
+Boboblox focuses on creativity, safety, and accessibility.
 
-**Use your preferred IDE**
+---
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+# ⭐ Features
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+| Feature | Description |
+|---------|-------------|
+| 🎮 Games | Play obbies, simulators, tycoons, and more |
+| 🧍 Avatar Customization | Change outfits, accessories, and styles |
+| 💰 Bobobux | Buy items, boosts, and special features |
+| 🛡️ Safety Tools | Parental controls and spending limits |
+| 🌍 Worlds | Explore different themed environments |
+| ⚡ Boosts | Temporary power‑ups for gameplay |
 
-Follow these steps:
+---
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-gh clone ThatBobo/Boboblox
+# 🎲 Games
 
-# Step 2: Navigate to the project directory.
-cd Boboblox
+Boboblox includes a growing library of kid‑friendly games.
 
-# Step 3: Install the necessary dependencies.
-npm i
+| Game | Type | Description |
+|------|------|-------------|
+| Obby Rush | Obby | Jump, dodge, and race to the finish |
+| Pet Friends | Simulator | Collect and upgrade cute pets |
+| City Tycoon | Tycoon | Build your own city empire |
+| Racing Blast | Racing | High‑speed fun for all ages |
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+More games are added regularly.
 
-**Edit a file directly in GitHub**
+---
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+# 💰 Bobobux (In‑Game Currency)
 
-**Use GitHub Codespaces**
+Bobobux is the official currency of Boboblox.  
+Players can use it to buy items, accessories, boosts, and unlock special features.
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## 📦 Bobobux Packages
 
-## What technologies are used for this project?
+| Package | Bonus | Total Bobobux | Price |
+|--------|--------|----------------|--------|
+| 100 | — | 100 | $3.40 |
+| 250 | +25 | 275 | $7.99 |
+| 500 | +75 | 575 | $14.99 |
+| 1,000 | +200 | 1,200 | $27.99 |
+| 2,500 | +625 | 3,125 | $64.99 |
+| 5,000 | +1,500 | 6,500 | $119.99 |
 
-This project is built with:
+### Why Buy Bobobux?
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+| Benefit | Description |
+|---------|-------------|
+| ⚡ Instant Delivery | Bobobux is added to your account immediately |
+| 🎁 Bonus Rewards | Larger packages include extra Bobobux |
+| 🛡️ Parental Controls | Parents can manage and limit spending |
 
-## How can I deploy this project?
+---
 
-Simply open [Lovable](https://lovable.dev/projects/d6b6fc7a-de40-428c-a717-37bf2d2ba6b3) and click on Share -> Publish.
+# 👨‍👩‍👧 Parental Safety
 
-## Can I connect a custom domain to my Lovable project?
+Boboblox is built with safety in mind.
 
-Yes, you can!
+| Safety Feature | Purpose |
+|----------------|----------|
+| Spending Limits | Parents can set maximum purchase amounts |
+| Purchase Alerts | Parents get notified of purchases |
+| Secure Checkout | All payments handled safely |
+| Permission Required | Kids should ask a parent before buying |
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+---
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+# 👥 Team
+
+Boboblox is created and maintained by the **Boboblox Team**.  
+Focused on safety, creativity, and fun.
+
+---
+
+# 📜 Footer
+
+© 2026 Boboblox. All rights reserved.
