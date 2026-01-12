@@ -14,17 +14,17 @@ const AboutSection = () => {
           <div>
             <span className="text-primary font-medium text-sm uppercase tracking-wider">About Boboblox</span>
             <h2 className="font-display text-4xl md:text-5xl font-bold mt-4 mb-6">
-              Building the Future of Block-Based Creativity
+              Roblox, Reimagined for Kids
             </h2>
             <p className="text-muted-foreground text-lg mb-6 leading-relaxed">
-              Boboblox is an innovative framework designed to empower creators. 
-              Whether you're building games, designing interfaces, or crafting 
-              digital experiences, Boboblox provides the tools you need.
+              Boboblox is a kid-friendly mod of Roblox designed specifically for players 
+              ages 7 and up. We take the games and creativity you love and wrap it in 
+              a safer, more welcoming experience.
             </p>
             <p className="text-muted-foreground text-lg mb-8 leading-relaxed">
-              Our mission is to make creative development accessible to everyone. 
-              With intuitive block-based design and powerful underlying technology, 
-              anyone can bring their ideas to life.
+              With Bobobux — our version of Robux styled for Boboblox — kids can 
+              customize their avatars, unlock exclusive items, and enjoy all their 
+              favorite experiences in a protected environment.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4">
@@ -58,10 +58,10 @@ const AboutSection = () => {
                 />
                 <div className="mt-8 text-center">
                   <h3 className="font-display text-2xl font-bold text-foreground mb-2">
-                    The Official Framework
+                    Safe Gaming for Kids
                   </h3>
                   <p className="text-muted-foreground">
-                    Open source • MIT License
+                    Ages 7+ • Parental Controls
                   </p>
                 </div>
               </div>

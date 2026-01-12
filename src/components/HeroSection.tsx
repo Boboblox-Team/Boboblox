@@ -55,7 +55,7 @@ const HeroSection = () => {
           {/* Badge */}
           <div className="inline-flex items-center gap-2 bg-secondary/50 border border-primary/20 rounded-full px-4 py-2 mb-6 backdrop-blur-sm">
             <Sparkles className="w-4 h-4 text-primary" />
-            <span className="text-sm text-muted-foreground">Building the future of creativity</span>
+            <span className="text-sm text-muted-foreground">A kid-friendly Roblox experience for ages 7+</span>
           </div>
 
           {/* Heading */}
@@ -66,8 +66,8 @@ const HeroSection = () => {
 
           {/* Subheading */}
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mb-10 leading-relaxed">
-            The official framework for block-based creativity. Build, design, and create
-            without limits. Your imagination is the only boundary.
+            The ultimate Roblox mod designed for young creators. Play, create, and earn 
+            Bobobux in a safe and fun environment made just for you!
           </p>
 
           {/* CTA Buttons */}
@@ -85,18 +85,18 @@ const HeroSection = () => {
           <div className="mt-16 grid grid-cols-3 gap-8 md:gap-16">
             <div className="flex flex-col items-center">
               <Box className="w-8 h-8 text-primary mb-2" />
-              <span className="font-display text-2xl md:text-3xl font-bold text-foreground">∞</span>
-              <span className="text-sm text-muted-foreground">Possibilities</span>
+              <span className="font-display text-2xl md:text-3xl font-bold text-foreground">7+</span>
+              <span className="text-sm text-muted-foreground">Ages</span>
             </div>
             <div className="flex flex-col items-center">
               <Zap className="w-8 h-8 text-primary mb-2" />
-              <span className="font-display text-2xl md:text-3xl font-bold text-foreground">Fast</span>
-              <span className="text-sm text-muted-foreground">Performance</span>
+              <span className="font-display text-2xl md:text-3xl font-bold text-foreground">Bobobux</span>
+              <span className="text-sm text-muted-foreground">Currency</span>
             </div>
             <div className="flex flex-col items-center">
               <Sparkles className="w-8 h-8 text-primary mb-2" />
-              <span className="font-display text-2xl md:text-3xl font-bold text-foreground">Easy</span>
-              <span className="text-sm text-muted-foreground">To Use</span>
+              <span className="font-display text-2xl md:text-3xl font-bold text-foreground">Safe</span>
+              <span className="text-sm text-muted-foreground">For Kids</span>
             </div>
           </div>
         </div>
