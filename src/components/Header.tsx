@@ -31,8 +31,8 @@ const Header = () => {
   const navLinks = [
     { name: "Home", href: "/", isRoute: true },
     { name: "Games", href: "/games", isRoute: true },
+    { name: "Create", href: "/create", isRoute: true },
     { name: "Bobobux", href: "/shop", isRoute: true },
-    { name: "Features", href: "/#features", isRoute: false },
     { name: "About", href: "/#about", isRoute: false },
   ];
 

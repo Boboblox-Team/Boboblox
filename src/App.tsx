@@ -7,6 +7,8 @@ import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import Games from "./pages/Games";
 import Shop from "./pages/Shop";
+import Create from "./pages/Create";
+import GameEditor from "./pages/GameEditor";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -22,6 +24,9 @@ const App = () => (
           <Route path="/auth" element={<Auth />} />
           <Route path="/games" element={<Games />} />
           <Route path="/shop" element={<Shop />} />
+          <Route path="/create" element={<Create />} />
+          <Route path="/create/new" element={<GameEditor />} />
+          <Route path="/create/edit/:id" element={<GameEditor />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
