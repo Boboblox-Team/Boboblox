@@ -1,6 +1,7 @@
 # 🎮 Boboblox
 
-<img src="https://github.com/user-attachments/assets/9d30b44f-a175-424b-bad3-d34fee1d6991" width="200" alt="Boboblox Logo" />
+<img width="100" height="100" alt="boboblox-logo" src="https://github.com/user-attachments/assets/0473e9c9-21e3-48c9-a433-090f9e8e6c78" />
+
 
 Boboblox is a kid‑friendly gaming platform where players can explore worlds, play games, customize avatars, and unlock special features.
 This README provides an overview of the platform, its features, and its systems.
