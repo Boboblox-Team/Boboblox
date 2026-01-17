@@ -13,6 +13,7 @@ import Create from "./pages/Create";
 import GameEditor from "./pages/GameEditor";
 import NotFound from "./pages/NotFound";
 import PlayPage from "./pages/play";
+import Profile from "./pages/Profile";
 
 const queryClient = new QueryClient();
 
@@ -34,6 +35,7 @@ const App = () => (
           <Route path="/create/edit/:id" element={<GameEditor />} />
           <Route path="/play/:id" element={<PlayPage />} />
           <Route path="*" element={<NotFound />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>
