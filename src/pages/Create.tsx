@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
-import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Plus, Gamepad2, Edit3, Trash2, Eye, EyeOff, Play } from "lucide-react";
 import { toast } from "sonner";
@@ -32,9 +31,9 @@ const Create = () => {
     if (!user) return;
     
     const { data } = await supabase
-      .from('profiles')
-      .select('username')
-      .eq('user_id', user.id)
+      .from("profiles")
+      .select("username")
+      .eq("user_id", user.id)
       .single();
     
     if (data) {
@@ -46,15 +45,14 @@ const Create = () => {
     if (!user) return;
 
     const { data, error } = await supabase
-      .from('user_games')
-      .select('*')
-      .eq('user_id', user.id)
-      .order('updated_at', { ascending: false });
+      .from("user_games")
+      .select("*")
+      .eq("user_id", user.id)
+      .order("updated_at", { ascending: false });
 
     if (error) {
       toast.error("Failed to load your games");
     } else {
-      // Cast the data properly
       const typedGames = (data || []).map(game => ({
         ...game,
         game_data: game.game_data as unknown as GameData
@@ -68,9 +66,9 @@ const Create = () => {
     if (!confirm(`Are you sure you want to delete "${gameTitle}"?`)) return;
 
     const { error } = await supabase
-      .from('user_games')
+      .from("user_games")
       .delete()
-      .eq('id', gameId);
+      .eq("id", gameId);
 
     if (error) {
       toast.error("Failed to delete game");
@@ -82,9 +80,9 @@ const Create = () => {
 
   const togglePublish = async (game: UserGame) => {
     const { error } = await supabase
-      .from('user_games')
+      .from("user_games")
       .update({ is_published: !game.is_published })
-      .eq('id', game.id);
+      .eq("id", game.id);
 
     if (error) {
       toast.error("Failed to update game");
@@ -105,10 +103,10 @@ const Create = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
-      <main className="pt-24 pb-16">
+    <div className="min-h-screen bg-background pt-20">
+      <main className="pb-16">
         <div className="container mx-auto px-4">
+          
           {/* Header */}
           <div className="text-center mb-12">
             <div className="inline-flex items-center gap-2 bg-secondary/50 border border-primary/20 rounded-full px-4 py-2 mb-6 backdrop-blur-sm">
@@ -116,7 +114,7 @@ const Create = () => {
               <span className="text-sm text-muted-foreground">Game Creator</span>
             </div>
             <h1 className="font-display text-4xl md:text-5xl font-bold mb-4">
-              Welcome, <span className="text-gradient-cyan">{profile?.username || 'Creator'}!</span>
+              Welcome, <span className="text-gradient-cyan">{profile?.username || "Creator"}!</span>
             </h1>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
               Build your own games with our easy drag-and-drop editor. No coding needed!
@@ -172,15 +170,15 @@ const Create = () => {
                         </h3>
                         <span className={`text-xs px-2 py-1 rounded-full ${
                           game.is_published 
-                            ? 'bg-green-500/20 text-green-400' 
-                            : 'bg-yellow-500/20 text-yellow-400'
+                            ? "bg-green-500/20 text-green-400" 
+                            : "bg-yellow-500/20 text-yellow-400"
                         }`}>
-                          {game.is_published ? 'Live' : 'Draft'}
+                          {game.is_published ? "Live" : "Draft"}
                         </span>
                       </div>
                       
                       <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
-                        {game.description || 'No description'}
+                        {game.description || "No description"}
                       </p>
 
                       <div className="flex items-center gap-2 text-xs text-muted-foreground mb-4">
