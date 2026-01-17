@@ -1,3 +1,4 @@
+import ProfileEditor from "./pages/ProfileEditor";
 import Navbar from "@/components/Navbar";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -36,6 +37,7 @@ const App = () => (
           <Route path="/play/:id" element={<PlayPage />} />
           <Route path="*" element={<NotFound />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/edit-profile" element={<ProfileEditor />} />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>
