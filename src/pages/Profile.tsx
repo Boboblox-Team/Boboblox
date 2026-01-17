@@ -1,52 +1,51 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import { useState } from "react";
 
 const Profile = () => {
+  // Temporary placeholder data — replace with real user data later
+  const [user] = useState({
+    username: "Player123",
+    avatar: "https://api.dicebear.com/7.x/thumbs/svg?seed=Boboblox",
+    bobobux: 250,
+    joined: "January 2025",
+  });
+
   return (
-    <div className="p-8 max-w-3xl mx-auto">
-      {/* Page Title */}
-      <h1 className="text-3xl font-bold mb-6">Your Profile</h1>
+    <div className="min-h-screen bg-gray-950 text-white px-6 py-10">
+      <div className="max-w-3xl mx-auto bg-gray-900 rounded-xl p-8 shadow-lg border border-gray-800">
+        
+        {/* Header */}
+        <div className="flex items-center gap-6">
+          <img
+            src={user.avatar}
+            alt="Avatar"
+            className="w-24 h-24 rounded-full border-4 border-blue-500"
+          />
 
-      {/* Avatar + Username */}
-      <div className="flex items-center gap-4 mb-8">
-        <div className="w-20 h-20 bg-gray-300 rounded-full" />
-        <div>
-          <h2 className="text-xl font-semibold">Username</h2>
-          <p className="text-gray-500">Joined: Today</p>
+          <div>
+            <h1 className="text-3xl font-bold">{user.username}</h1>
+            <p className="text-gray-400">Joined {user.joined}</p>
+          </div>
         </div>
-      </div>
 
-      {/* Bobobux Wallet */}
-      <div className="mb-8 p-4 border rounded-lg bg-gray-50">
-        <h3 className="text-lg font-semibold mb-2">Bobobux Balance</h3>
-        <p className="text-2xl font-bold">0</p>
-      </div>
+        {/* Stats */}
+        <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div className="bg-gray-800 p-5 rounded-lg border border-gray-700">
+            <h2 className="text-xl font-semibold">Bobobux</h2>
+            <p className="text-3xl font-bold text-green-400">{user.bobobux}</p>
+          </div>
 
-      {/* Your Games Section */}
-      <div className="mb-8">
-        <h3 className="text-xl font-semibold mb-4">Your Games</h3>
+          <div className="bg-gray-800 p-5 rounded-lg border border-gray-700">
+            <h2 className="text-xl font-semibold">Games Created</h2>
+            <p className="text-3xl font-bold text-blue-400">0</p>
+          </div>
+        </div>
 
-        <p className="text-gray-500 mb-4">
-          This will later show the games you created in /create.
-        </p>
-
-        <Link
-          to="/create"
-          className="inline-block px-4 py-2 bg-blue-600 text-white rounded-md"
-        >
-          Go to My Games
-        </Link>
-      </div>
-
-      {/* Settings */}
-      <div className="mt-10">
-        <h3 className="text-xl font-semibold mb-4">Settings</h3>
-
-        <ul className="space-y-2">
-          <li className="text-blue-600 cursor-pointer">Change Username</li>
-          <li className="text-blue-600 cursor-pointer">Change Avatar</li>
-          <li className="text-blue-600 cursor-pointer">Log Out</li>
-        </ul>
+        {/* Actions */}
+        <div className="mt-10">
+          <button className="px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg font-semibold">
+            Edit Profile
+          </button>
+        </div>
       </div>
     </div>
   );
