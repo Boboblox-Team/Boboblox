@@ -53,7 +53,7 @@ const PlayPage = () => {
 
         <div className="p-6 bg-card border border-border rounded-xl">
   <GameEngine gameData={game.game_data} title={game.title} />
-  </div>
+        </div>
       </main>
 
       <Footer />
