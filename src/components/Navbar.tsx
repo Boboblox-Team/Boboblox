@@ -3,28 +3,30 @@ import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState } from "react";
 
 const Navbar = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState(null);
 
-  // Check auth state on mount
+  // Load user on mount
   useEffect(() => {
-    const checkUser = async () => {
+    const loadUser = async () => {
       const { data } = await supabase.auth.getUser();
-      setIsLoggedIn(!!data.user);
+      setUser(data.user || null);
     };
 
-    checkUser();
+    loadUser();
 
     // Listen for login/logout changes
-    const { data: listener } = supabase.auth.onAuthStateChange(() => {
-      checkUser();
-    });
+    const { data: listener } = supabase.auth.onAuthStateChange(
+      (_event, session) => {
+        setUser(session?.user || null);
+      }
+    );
 
     return () => {
       listener.subscription.unsubscribe();
     };
   }, []);
 
-  // Sign out function
+  // Sign out
   const handleSignOut = async () => {
     await supabase.auth.signOut();
     window.location.href = "/";
@@ -57,13 +59,13 @@ const Navbar = () => {
           About
         </NavLink>
 
-        {isLoggedIn && (
+        {user && (
           <NavLink to="/profile" className="hover:text-blue-400" activeClassName="text-blue-500 font-bold">
             Profile
           </NavLink>
         )}
 
-        {!isLoggedIn ? (
+        {!user ? (
           <NavLink to="/auth" className="hover:text-blue-400" activeClassName="text-blue-500 font-bold">
             Get Started
           </NavLink>
