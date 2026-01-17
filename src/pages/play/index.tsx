@@ -54,7 +54,7 @@ const PlayPage = () => {
         {/* This is where your actual game engine will go */}
         <div className="p-6 bg-card border border-border rounded-xl">
           <pre className="text-sm">
-            {JSON.stringify(game.game_data, null, 2)}
+            <GameEngine gameData={game.game_data} title={game.title} />
           </pre>
         </div>
       </main>
