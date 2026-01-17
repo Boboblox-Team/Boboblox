@@ -46,7 +46,7 @@ const Games = () => {
   useEffect(() => {
     const fetchGames = async () => {
       const { data, error } = await supabase
-        .from('games')
+        .from('user_games')
         .select('id, title, description, thumbnail_color, play_count, profiles:user_id(username)')
         .eq('is_published', true)
         .order('play_count', { ascending: false });
