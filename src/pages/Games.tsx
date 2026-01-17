@@ -47,7 +47,7 @@ const Games = () => {
     const fetchGames = async () => {
       const { data, error } = await supabase
         .from('user_games')
-        .select('id, title, description, thumbnail_color, play_count, profiles:user_id(username)')
+        .select('id, title, description, thumbnail_color, play_count, user_id')
         .eq('is_published', true)
         .order('play_count', { ascending: false });
       
