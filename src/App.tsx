@@ -22,6 +22,8 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <Navbar />
+
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/auth" element={<Auth />} />
@@ -30,9 +32,7 @@ const App = () => (
           <Route path="/create" element={<Create />} />
           <Route path="/create/new" element={<GameEditor />} />
           <Route path="/create/edit/:id" element={<GameEditor />} />
-
           <Route path="/play/:id" element={<PlayPage />} />
-
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
