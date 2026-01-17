@@ -3,6 +3,7 @@ import { ELEMENT_TEMPLATES } from "./types";
 
 interface ElementPaletteProps {
   onDragStart: (type: string) => void;
+  onTouchDragStart?: (type: string, touch: React.Touch) => void;
 }
 
 const elements = [
@@ -15,7 +16,13 @@ const elements = [
   { type: 'spike', label: 'Spike', icon: Triangle, color: ELEMENT_TEMPLATES.spike.color },
 ];
 
-export const ElementPalette = ({ onDragStart }: ElementPaletteProps) => {
+export const ElementPalette = ({ onDragStart, onTouchDragStart }: ElementPaletteProps) => {
+  const handleTouchStart = (e: React.TouchEvent, type: string) => {
+    e.preventDefault();
+    const touch = e.touches[0];
+    onTouchDragStart?.(type, touch);
+  };
+
   return (
     <div className="bg-card border border-border rounded-xl p-4">
       <h3 className="font-display font-bold text-foreground mb-4 flex items-center gap-2">
@@ -27,7 +34,8 @@ export const ElementPalette = ({ onDragStart }: ElementPaletteProps) => {
             key={el.type}
             draggable
             onDragStart={() => onDragStart(el.type)}
-            className="flex flex-col items-center gap-2 p-3 bg-secondary/50 rounded-xl cursor-grab hover:bg-secondary hover:scale-105 transition-all active:cursor-grabbing border-2 border-transparent hover:border-primary/30"
+            onTouchStart={(e) => handleTouchStart(e, el.type)}
+            className="flex flex-col items-center gap-2 p-3 bg-secondary/50 rounded-xl cursor-grab hover:bg-secondary hover:scale-105 transition-all active:cursor-grabbing border-2 border-transparent hover:border-primary/30 touch-none"
           >
             <div 
               className="w-12 h-12 rounded-lg flex items-center justify-center text-white"

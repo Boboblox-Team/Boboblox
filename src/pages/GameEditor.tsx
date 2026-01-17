@@ -21,6 +21,7 @@ const GameEditor = () => {
   const [logicBlocks, setLogicBlocks] = useState<LogicBlock[]>([]);
   const [backgroundColor, setBackgroundColor] = useState("#1e293b");
   const [draggingType, setDraggingType] = useState<string | null>(null);
+  const [touchDraggingType, setTouchDraggingType] = useState<string | null>(null);
   const [selectedElementId, setSelectedElementId] = useState<string | null>(null);
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
@@ -69,6 +70,14 @@ const GameEditor = () => {
 
   const handleDragStart = (type: string) => {
     setDraggingType(type);
+  };
+
+  const handleTouchDragStart = (type: string) => {
+    setTouchDraggingType(type);
+  };
+
+  const handleTouchDragEnd = () => {
+    setTouchDraggingType(null);
   };
 
   const handleAddElement = (type: string, x: number, y: number) => {
@@ -224,7 +233,7 @@ const GameEditor = () => {
       <div className="flex-1 flex">
         {/* Left sidebar - Elements */}
         <aside className="w-64 p-4 border-r border-border overflow-y-auto">
-          <ElementPalette onDragStart={handleDragStart} />
+          <ElementPalette onDragStart={handleDragStart} onTouchDragStart={handleTouchDragStart} />
         </aside>
 
         {/* Main canvas */}
@@ -238,6 +247,8 @@ const GameEditor = () => {
             onDeleteElement={handleDeleteElement}
             selectedElementId={selectedElementId}
             backgroundColor={backgroundColor}
+            touchDraggingType={touchDraggingType}
+            onTouchDragEnd={handleTouchDragEnd}
           />
           
           <div className="mt-4 text-center text-sm text-muted-foreground">
