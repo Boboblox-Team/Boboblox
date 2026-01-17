@@ -11,6 +11,8 @@ interface GameCanvasProps {
   onDeleteElement: (id: string) => void;
   selectedElementId: string | null;
   backgroundColor: string;
+  touchDraggingType?: string | null;
+  onTouchDragEnd?: () => void;
 }
 
 export const GameCanvas = ({
@@ -22,10 +24,14 @@ export const GameCanvas = ({
   onDeleteElement,
   selectedElementId,
   backgroundColor,
+  touchDraggingType,
+  onTouchDragEnd,
 }: GameCanvasProps) => {
   const canvasRef = useRef<HTMLDivElement>(null);
   const [movingElement, setMovingElement] = useState<string | null>(null);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
+  const [touchMovingElement, setTouchMovingElement] = useState<string | null>(null);
+  const [touchOffset, setTouchOffset] = useState({ x: 0, y: 0 });
 
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
@@ -77,6 +83,62 @@ export const GameCanvas = ({
     onSelectElement(null);
   };
 
+  // Touch handlers for moving existing elements
+  const handleTouchStart = (e: React.TouchEvent, elementId: string) => {
+    e.stopPropagation();
+    const touch = e.touches[0];
+    const element = elements.find(el => el.id === elementId);
+    if (!element || !canvasRef.current) return;
+
+    const rect = canvasRef.current.getBoundingClientRect();
+    setTouchMovingElement(elementId);
+    setTouchOffset({
+      x: touch.clientX - rect.left - element.x,
+      y: touch.clientY - rect.top - element.y,
+    });
+    onSelectElement(elementId);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!canvasRef.current) return;
+    const touch = e.touches[0];
+    const rect = canvasRef.current.getBoundingClientRect();
+
+    // Handle moving existing element
+    if (touchMovingElement) {
+      const element = elements.find(el => el.id === touchMovingElement);
+      if (!element) return;
+
+      const x = Math.max(0, Math.min(touch.clientX - rect.left - touchOffset.x, rect.width - element.width));
+      const y = Math.max(0, Math.min(touch.clientY - rect.top - touchOffset.y, rect.height - element.height));
+      onMoveElement(touchMovingElement, x, y);
+    }
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    // Handle dropping new element from palette
+    if (touchDraggingType && canvasRef.current) {
+      const touch = e.changedTouches[0];
+      const rect = canvasRef.current.getBoundingClientRect();
+      
+      // Check if touch ended inside canvas
+      if (
+        touch.clientX >= rect.left &&
+        touch.clientX <= rect.right &&
+        touch.clientY >= rect.top &&
+        touch.clientY <= rect.bottom
+      ) {
+        const template = ELEMENT_TEMPLATES[touchDraggingType as keyof typeof ELEMENT_TEMPLATES];
+        const x = Math.max(0, Math.min(touch.clientX - rect.left - template.width / 2, rect.width - template.width));
+        const y = Math.max(0, Math.min(touch.clientY - rect.top - template.height / 2, rect.height - template.height));
+        onAddElement(touchDraggingType, x, y);
+      }
+      onTouchDragEnd?.();
+    }
+
+    setTouchMovingElement(null);
+  };
+
   const getElementIcon = (type: string) => {
     switch (type) {
       case 'player': return '🎮';
@@ -94,7 +156,7 @@ export const GameCanvas = ({
     <div className="relative">
       <div
         ref={canvasRef}
-        className="w-full aspect-[16/10] rounded-xl border-4 border-border relative overflow-hidden cursor-crosshair"
+        className="w-full aspect-[16/10] rounded-xl border-4 border-border relative overflow-hidden cursor-crosshair touch-none"
         style={{ backgroundColor }}
         onDrop={handleDrop}
         onDragOver={handleDragOver}
@@ -102,6 +164,8 @@ export const GameCanvas = ({
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseUp}
         onClick={handleCanvasClick}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
       >
         {/* Grid overlay */}
         <div 
@@ -127,6 +191,7 @@ export const GameCanvas = ({
               backgroundColor: el.color,
             }}
             onMouseDown={(e) => handleMouseDown(e, el.id)}
+            onTouchStart={(e) => handleTouchStart(e, el.id)}
           >
             <span className="text-lg pointer-events-none">
               {getElementIcon(el.type)}
