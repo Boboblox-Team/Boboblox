@@ -51,10 +51,9 @@ const PlayPage = () => {
         <h1 className="text-3xl font-bold mb-4">{game.title}</h1>
         <p className="text-muted-foreground mb-6">{game.description}</p>
 
-        {/* This is where your actual game engine will go */}
         <div className="p-6 bg-card border border-border rounded-xl">
   <GameEngine gameData={game.game_data} title={game.title} />
-        </div>
+  </div>
       </main>
 
       <Footer />
