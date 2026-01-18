@@ -20,8 +20,8 @@ const Profile = () => {
       const { data } = await supabase
         .from("profiles")
         .select("username")
-        .eq("id", auth.user.id)
-        .single();
+        .eq("user_id", auth.user.id)
+        .maybeSingle();
 
       setProfile(data);
       setLoading(false);
@@ -41,18 +41,18 @@ const Profile = () => {
   return (
     <div className="min-h-screen bg-gray-950 text-white pt-20 px-6">
       <div className="max-w-3xl mx-auto bg-gray-900 p-8 rounded-xl border border-gray-800 shadow-lg">
-        <h1 className="text-4xl font-bold mb-4">{profile.username}</h1>
+        <h1 className="text-4xl font-bold mb-4">{profile?.username ?? "No username set"}</h1>
 
         <p className="text-gray-400 mb-8">
           Welcome to your Boboblox profile.
         </p>
 
-<Link
-  to="/profile/edit"
-  className="px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg font-semibold inline-block"
->
-  Edit Profile
-</Link>
+        <Link
+          to="/profile/edit"
+          className="px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg font-semibold inline-block"
+        >
+          Edit Profile
+        </Link>
       </div>
     </div>
   );
