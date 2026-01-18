@@ -1,3 +1,17 @@
+// New Roblox-style object types
+export interface GameObject {
+  id: string;
+  type: 'part' | 'sphere' | 'model' | 'wedge' | 'cylinder';
+  name: string;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  color: string;
+  rotation?: number;
+}
+
+// Legacy element types for backwards compatibility
 export interface GameElement {
   id: string;
   type: 'player' | 'block' | 'coin' | 'enemy' | 'goal' | 'platform' | 'spike';
@@ -17,6 +31,7 @@ export interface LogicBlock {
 
 export interface GameData {
   elements: GameElement[];
+  objects?: GameObject[];
   logic: LogicBlock[];
   backgroundColor: string;
 }
@@ -33,6 +48,14 @@ export interface UserGame {
   created_at: string;
   updated_at: string;
 }
+
+export const OBJECT_TEMPLATES: Record<GameObject['type'], { width: number; height: number; color: string; name: string }> = {
+  part: { width: 80, height: 60, color: '#6366f1', name: 'Part' },
+  sphere: { width: 60, height: 60, color: '#f43f5e', name: 'Sphere' },
+  model: { width: 100, height: 80, color: '#22c55e', name: 'Model' },
+  wedge: { width: 70, height: 50, color: '#f59e0b', name: 'Wedge' },
+  cylinder: { width: 50, height: 70, color: '#06b6d4', name: 'Cylinder' },
+};
 
 export const ELEMENT_TEMPLATES = {
   player: { width: 40, height: 40, color: '#00d4ff' },
