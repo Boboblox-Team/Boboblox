@@ -3,12 +3,12 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { ElementPalette } from "@/components/game-creator/ElementPalette";
-import { LogicPanel } from "@/components/game-creator/LogicPanel";
-import { GameCanvas } from "@/components/game-creator/GameCanvas";
+import { ObjectPalette } from "@/components/game-creator/ObjectPalette";
+import { PropertiesPanel } from "@/components/game-creator/PropertiesPanel";
+import { Workspace } from "@/components/game-creator/Workspace";
 import { GameCreatorToolbar } from "@/components/game-creator/GameCreatorToolbar";
 import { GamePreviewModal } from "@/components/game-creator/GamePreviewModal";
-import { GameElement, LogicBlock, GameData, ELEMENT_TEMPLATES } from "@/components/game-creator/types";
+import { GameObject, GameData, OBJECT_TEMPLATES } from "@/components/game-creator/types";
 
 const GameEditor = () => {
   const { id } = useParams();
@@ -17,16 +17,17 @@ const GameEditor = () => {
   
   const [title, setTitle] = useState("My Awesome Game");
   const [description, setDescription] = useState("");
-  const [elements, setElements] = useState<GameElement[]>([]);
-  const [logicBlocks, setLogicBlocks] = useState<LogicBlock[]>([]);
+  const [objects, setObjects] = useState<GameObject[]>([]);
   const [backgroundColor, setBackgroundColor] = useState("#1e293b");
-  const [draggingType, setDraggingType] = useState<string | null>(null);
-  const [touchDraggingType, setTouchDraggingType] = useState<string | null>(null);
-  const [selectedElementId, setSelectedElementId] = useState<string | null>(null);
+  const [draggingType, setDraggingType] = useState<GameObject['type'] | null>(null);
+  const [touchDraggingType, setTouchDraggingType] = useState<GameObject['type'] | null>(null);
+  const [selectedObjectId, setSelectedObjectId] = useState<string | null>(null);
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [isPublished, setIsPublished] = useState(false);
   const [gameId, setGameId] = useState<string | null>(id || null);
+
+  const selectedObject = objects.find(o => o.id === selectedObjectId) || null;
 
   // Redirect if not authenticated
   useEffect(() => {
@@ -61,18 +62,33 @@ const GameEditor = () => {
       setTitle(data.title);
       setDescription(data.description || "");
       const gameData = data.game_data as unknown as GameData;
-      setElements(gameData.elements || []);
-      setLogicBlocks(gameData.logic || []);
+      // Load new object format, or migrate from old elements
+      if (gameData.objects) {
+        setObjects(gameData.objects);
+      } else if (gameData.elements) {
+        // Migrate old elements to new object format
+        const migratedObjects: GameObject[] = gameData.elements.map((el, index) => ({
+          id: el.id,
+          type: 'part' as const,
+          name: `Object ${index + 1}`,
+          x: el.x,
+          y: el.y,
+          width: el.width,
+          height: el.height,
+          color: el.color,
+        }));
+        setObjects(migratedObjects);
+      }
       setBackgroundColor(gameData.backgroundColor || "#1e293b");
       setIsPublished(data.is_published);
     }
   };
 
-  const handleDragStart = (type: string) => {
+  const handleDragStart = (type: GameObject['type']) => {
     setDraggingType(type);
   };
 
-  const handleTouchDragStart = (type: string) => {
+  const handleTouchDragStart = (type: GameObject['type']) => {
     setTouchDraggingType(type);
   };
 
@@ -80,51 +96,46 @@ const GameEditor = () => {
     setTouchDraggingType(null);
   };
 
-  const handleAddElement = (type: string, x: number, y: number) => {
-    const template = ELEMENT_TEMPLATES[type as keyof typeof ELEMENT_TEMPLATES];
-    const newElement: GameElement = {
+  const handleAddObject = (type: GameObject['type'], x: number, y: number) => {
+    const template = OBJECT_TEMPLATES[type];
+    const newObject: GameObject = {
       id: crypto.randomUUID(),
-      type: type as GameElement['type'],
-      x,
-      y,
+      type,
+      name: `${template.name} ${objects.filter(o => o.type === type).length + 1}`,
+      x: Math.round(x / 40) * 40,
+      y: Math.round(y / 40) * 40,
       width: template.width,
       height: template.height,
       color: template.color,
     };
-    setElements(prev => [...prev, newElement]);
+    setObjects(prev => [...prev, newObject]);
     setDraggingType(null);
+    setSelectedObjectId(newObject.id);
   };
 
-  const handleMoveElement = (id: string, x: number, y: number) => {
-    setElements(prev => prev.map(el => 
-      el.id === id ? { ...el, x, y } : el
+  const handleMoveObject = (id: string, x: number, y: number) => {
+    setObjects(prev => prev.map(obj => 
+      obj.id === id ? { ...obj, x, y } : obj
     ));
   };
 
-  const handleDeleteElement = (id: string) => {
-    setElements(prev => prev.filter(el => el.id !== id));
-    setSelectedElementId(null);
-    // Also remove any logic referencing this element
-    setLogicBlocks(prev => prev.filter(lb => lb.targetId !== id));
-  };
-
-  const handleAddLogic = (type: string) => {
-    const newLogic: LogicBlock = {
-      id: crypto.randomUUID(),
-      type: type as LogicBlock['type'],
-      value: type === 'add_score' ? 10 : undefined,
-    };
-    setLogicBlocks(prev => [...prev, newLogic]);
-  };
-
-  const handleRemoveLogic = (id: string) => {
-    setLogicBlocks(prev => prev.filter(lb => lb.id !== id));
-  };
-
-  const handleUpdateLogic = (id: string, updates: Partial<LogicBlock>) => {
-    setLogicBlocks(prev => prev.map(lb => 
-      lb.id === id ? { ...lb, ...updates } : lb
+  const handleResizeObject = (id: string, width: number, height: number) => {
+    setObjects(prev => prev.map(obj => 
+      obj.id === id ? { ...obj, width, height } : obj
     ));
+  };
+
+  const handleUpdateObject = (id: string, updates: Partial<GameObject>) => {
+    setObjects(prev => prev.map(obj => 
+      obj.id === id ? { ...obj, ...updates } : obj
+    ));
+  };
+
+  const handleDeleteObject = (id: string) => {
+    setObjects(prev => prev.filter(obj => obj.id !== id));
+    if (selectedObjectId === id) {
+      setSelectedObjectId(null);
+    }
   };
 
   const handleSave = async (publish = false) => {
@@ -141,14 +152,14 @@ const GameEditor = () => {
     setIsSaving(true);
 
     const gameData: GameData = {
-      elements,
-      logic: logicBlocks,
+      objects,
+      elements: [], // Keep for backwards compatibility
+      logic: [],
       backgroundColor,
     };
 
     try {
       if (gameId) {
-        // Update existing game
         const { error } = await supabase
           .from('user_games')
           .update({
@@ -168,7 +179,6 @@ const GameEditor = () => {
           toast.success("Game saved!");
         }
       } else {
-        // Create new game
         const { data, error } = await supabase
           .from('user_games')
           .insert({
@@ -192,7 +202,6 @@ const GameEditor = () => {
           toast.success("Game saved!");
         }
         
-        // Update URL without reload
         window.history.replaceState(null, '', `/create/edit/${data.id}`);
       }
     } catch (error: any) {
@@ -203,8 +212,9 @@ const GameEditor = () => {
   };
 
   const gameData: GameData = {
-    elements,
-    logic: logicBlocks,
+    objects,
+    elements: [],
+    logic: [],
     backgroundColor,
   };
 
@@ -230,46 +240,18 @@ const GameEditor = () => {
         onBackgroundChange={setBackgroundColor}
       />
 
-      <div className="flex-1 flex">
-        {/* Left sidebar - Elements */}
-        <aside className="w-64 p-4 border-r border-border overflow-y-auto">
-          <ElementPalette onDragStart={handleDragStart} onTouchDragStart={handleTouchDragStart} />
-        </aside>
-
-        {/* Main canvas */}
-        <main className="flex-1 p-6 overflow-auto">
-          <GameCanvas
-            elements={elements}
-            draggingType={draggingType}
-            onAddElement={handleAddElement}
-            onMoveElement={handleMoveElement}
-            onSelectElement={setSelectedElementId}
-            onDeleteElement={handleDeleteElement}
-            selectedElementId={selectedElementId}
-            backgroundColor={backgroundColor}
-            touchDraggingType={touchDraggingType}
-            onTouchDragEnd={handleTouchDragEnd}
+      <div className="flex-1 flex overflow-hidden">
+        {/* Left sidebar - Object Palette */}
+        <aside className="w-56 p-4 border-r border-border overflow-y-auto bg-card/50">
+          <ObjectPalette 
+            onDragStart={handleDragStart} 
+            onTouchDragStart={handleTouchDragStart} 
           />
           
-          <div className="mt-4 text-center text-sm text-muted-foreground">
-            <p>💡 Tip: Drag game pieces from the left, then add rules on the right!</p>
-          </div>
-        </main>
-
-        {/* Right sidebar - Logic */}
-        <aside className="w-72 p-4 border-l border-border overflow-y-auto">
-          <LogicPanel
-            logicBlocks={logicBlocks}
-            elements={elements}
-            onAddLogic={handleAddLogic}
-            onRemoveLogic={handleRemoveLogic}
-            onUpdateLogic={handleUpdateLogic}
-          />
-
           {/* Description */}
-          <div className="mt-4 bg-card border border-border rounded-xl p-4">
-            <h3 className="font-display font-bold text-foreground mb-2 flex items-center gap-2">
-              <span className="text-xl">📝</span> Description
+          <div className="mt-6 pt-4 border-t border-border">
+            <h3 className="font-display font-bold text-foreground text-sm uppercase tracking-wider mb-2">
+              📝 Description
             </h3>
             <textarea
               value={description}
@@ -278,6 +260,30 @@ const GameEditor = () => {
               className="w-full h-20 bg-background border border-border rounded-lg p-2 text-sm resize-none"
             />
           </div>
+        </aside>
+
+        {/* Main workspace */}
+        <Workspace
+          objects={objects}
+          draggingType={draggingType}
+          touchDraggingType={touchDraggingType}
+          onAddObject={handleAddObject}
+          onMoveObject={handleMoveObject}
+          onResizeObject={handleResizeObject}
+          onSelectObject={setSelectedObjectId}
+          onDeleteObject={handleDeleteObject}
+          selectedObjectId={selectedObjectId}
+          backgroundColor={backgroundColor}
+          onTouchDragEnd={handleTouchDragEnd}
+        />
+
+        {/* Right sidebar - Properties Panel */}
+        <aside className="w-64 p-4 border-l border-border overflow-y-auto bg-card/50">
+          <PropertiesPanel
+            selectedObject={selectedObject}
+            onUpdateObject={handleUpdateObject}
+            onDeleteObject={handleDeleteObject}
+          />
         </aside>
       </div>
 
