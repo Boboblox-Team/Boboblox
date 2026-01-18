@@ -69,8 +69,8 @@ export const GameCanvas = ({
     const element = elements.find(el => el.id === movingElement);
     if (!element) return;
 
-    const x = Math.max(0, Math.min(e.clientX - rect.left - offset.x + rect.left, rect.width - element.width));
-    const y = Math.max(0, Math.min(e.clientY - rect.top - offset.y + rect.top, rect.height - element.height));
+    const x = Math.max(0, Math.min(e.clientX - rect.left - offset.x, rect.width - element.width));
+    const y = Math.max(0, Math.min(e.clientY - rect.top - offset.y, rect.height - element.height));
 
     onMoveElement(movingElement, x, y);
   };
@@ -83,7 +83,7 @@ export const GameCanvas = ({
     onSelectElement(null);
   };
 
-  // Touch handlers for moving existing elements
+  // Touch handlers
   const handleTouchStart = (e: React.TouchEvent, elementId: string) => {
     e.stopPropagation();
     const touch = e.touches[0];
@@ -104,7 +104,6 @@ export const GameCanvas = ({
     const touch = e.touches[0];
     const rect = canvasRef.current.getBoundingClientRect();
 
-    // Handle moving existing element
     if (touchMovingElement) {
       const element = elements.find(el => el.id === touchMovingElement);
       if (!element) return;
@@ -116,12 +115,10 @@ export const GameCanvas = ({
   };
 
   const handleTouchEnd = (e: React.TouchEvent) => {
-    // Handle dropping new element from palette
     if (touchDraggingType && canvasRef.current) {
       const touch = e.changedTouches[0];
       const rect = canvasRef.current.getBoundingClientRect();
-      
-      // Check if touch ended inside canvas
+
       if (
         touch.clientX >= rect.left &&
         touch.clientX <= rect.right &&
@@ -141,14 +138,14 @@ export const GameCanvas = ({
 
   const getElementIcon = (type: string) => {
     switch (type) {
-      case 'player': return '🎮';
-      case 'block': return '🧱';
-      case 'coin': return '⭐';
-      case 'enemy': return '👾';
-      case 'goal': return '🏆';
-      case 'platform': return '➖';
-      case 'spike': return '🔺';
-      default: return '❓';
+      case "player": return "🎮";
+      case "block": return "🧱";
+      case "coin": return "⭐";
+      case "enemy": return "👾";
+      case "goal": return "🏆";
+      case "platform": return "➖";
+      case "spike": return "🔺";
+      default: return "❓";
     }
   };
 
@@ -167,12 +164,13 @@ export const GameCanvas = ({
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
-        {/* Grid overlay */}
-        <div 
-          className="absolute inset-0 opacity-10 pointer-events-none"
+        {/* Grid BEHIND elements */}
+        <div
+          className="absolute inset-0 opacity-10 pointer-events-none z-0"
           style={{
-            backgroundImage: 'linear-gradient(hsl(var(--foreground)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--foreground)) 1px, transparent 1px)',
-            backgroundSize: '20px 20px'
+            backgroundImage:
+              "linear-gradient(hsl(var(--foreground)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--foreground)) 1px, transparent 1px)",
+            backgroundSize: "20px 20px",
           }}
         />
 
@@ -180,8 +178,8 @@ export const GameCanvas = ({
         {elements.map((el) => (
           <div
             key={el.id}
-            className={`absolute rounded-lg flex items-center justify-center cursor-move transition-all select-none ${
-              selectedElementId === el.id ? 'ring-2 ring-primary ring-offset-2 ring-offset-background z-10' : ''
+            className={`absolute z-10 rounded-lg flex items-center justify-center cursor-move transition-all select-none ${
+              selectedElementId === el.id ? "ring-2 ring-primary ring-offset-2 ring-offset-background" : ""
             }`}
             style={{
               left: el.x,
@@ -193,11 +191,8 @@ export const GameCanvas = ({
             onMouseDown={(e) => handleMouseDown(e, el.id)}
             onTouchStart={(e) => handleTouchStart(e, el.id)}
           >
-            <span className="text-lg pointer-events-none">
-              {getElementIcon(el.type)}
-            </span>
-            
-            {/* Delete button on selected */}
+            <span className="text-lg pointer-events-none">{getElementIcon(el.type)}</span>
+
             {selectedElementId === el.id && (
               <button
                 className="absolute -top-2 -right-2 w-6 h-6 bg-destructive text-destructive-foreground rounded-full flex items-center justify-center hover:scale-110 transition-transform"
@@ -214,7 +209,7 @@ export const GameCanvas = ({
 
         {/* Empty state */}
         {elements.length === 0 && (
-          <div className="absolute inset-0 flex items-center justify-center text-muted-foreground">
+          <div className="absolute inset-0 flex items-center justify-center text-muted-foreground z-10">
             <div className="text-center">
               <p className="text-4xl mb-2">🎨</p>
               <p className="text-lg font-medium">Drag items here to build your game!</p>
