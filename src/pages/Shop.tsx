@@ -51,6 +51,29 @@ const packages: BobobuxPackage[] = [
   },
 ];
 
+// ------------------------------
+// Bobibe Payment Handler
+// ------------------------------
+const handlePurchase = async (packId: string) => {
+  try {
+    const res = await fetch("/api/bobibe/start", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ packId }),
+    });
+
+    const data = await res.json();
+
+    if (data.checkoutUrl) {
+      window.location.href = data.checkoutUrl;
+    } else {
+      console.error("Bobibe did not return a checkout URL");
+    }
+  } catch (err) {
+    console.error("Bobibe payment error:", err);
+  }
+};
+
 const BobobuxCard = ({ pkg }: { pkg: BobobuxPackage }) => {
   const totalAmount = pkg.amount + (pkg.bonus || 0);
 
@@ -104,10 +127,10 @@ const BobobuxCard = ({ pkg }: { pkg: BobobuxPackage }) => {
         </div>
       )}
 
-      {/* Price */}
+      {/* Price (£ only — Option A) */}
       <div className="text-center mb-6">
         <span className="font-display text-2xl font-bold text-gradient-cyan">
-          ${pkg.price.toFixed(2)}
+          £{pkg.price.toFixed(2)}
         </span>
       </div>
 
@@ -115,6 +138,7 @@ const BobobuxCard = ({ pkg }: { pkg: BobobuxPackage }) => {
       <Button
         variant={pkg.popular || pkg.bestValue ? "hero" : "outline"}
         className="w-full"
+        onClick={() => handlePurchase(pkg.id)}
       >
         Buy Now
       </Button>
@@ -135,6 +159,14 @@ const Shop = () => {
                 Official Bobobux Shop
               </span>
             </div>
+
+            <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/30 rounded-full px-4 py-1 mb-4">
+              <Sparkles className="w-4 h-4 text-primary" />
+              <span className="text-xs font-semibold text-primary">
+                Powered by Bobibe — the official payment system of Boboblox
+              </span>
+            </div>
+
             <h1 className="font-display text-4xl md:text-5xl font-bold mb-4">
               Get <span className="text-gradient-cyan">Bobobux</span>
             </h1>
@@ -157,8 +189,8 @@ const Shop = () => {
                   Safe & Secure Purchasing
                 </h3>
                 <p className="text-muted-foreground text-sm">
-                  All Bobobux purchases are handled securely. Parents can set
-                  spending limits in the dashboard. Starting at just $3.40!
+                  All Bobobux purchases are handled securely through Bobibe.
+                  Parents can set spending limits in the dashboard.
                 </p>
               </div>
             </div>
