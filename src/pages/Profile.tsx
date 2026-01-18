@@ -47,13 +47,12 @@ const Profile = () => {
           Welcome to your Boboblox profile.
         </p>
 
-        {/* Edit Profile Button */}
-        <Link
-          to="/edit-profile"
-          className="px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg font-semibold inline-block"
-        >
-          Edit Profile
-        </Link>
+<Link
+  to="/profile/edit"
+  className="px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg font-semibold inline-block"
+>
+  Edit Profile
+</Link>
       </div>
     </div>
   );
