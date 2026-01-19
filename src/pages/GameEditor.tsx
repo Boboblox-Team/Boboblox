@@ -9,6 +9,7 @@ import { Workspace } from "@/components/game-creator/Workspace";
 import { GameCreatorToolbar } from "@/components/game-creator/GameCreatorToolbar";
 import { GamePreviewModal } from "@/components/game-creator/GamePreviewModal";
 import { GameObject, GameData, OBJECT_TEMPLATES } from "@/components/game-creator/types";
+import { ChevronDown, ChevronRight, Layers } from "lucide-react";
 
 const GameEditor = () => {
   const { id } = useParams();
@@ -26,6 +27,10 @@ const GameEditor = () => {
   const [isSaving, setIsSaving] = useState(false);
   const [isPublished, setIsPublished] = useState(false);
   const [gameId, setGameId] = useState<string | null>(id || null);
+  
+  // Collapsible panel states
+  const [explorerOpen, setExplorerOpen] = useState(true);
+  const [propertiesOpen, setPropertiesOpen] = useState(true);
 
   const selectedObject = objects.find(o => o.id === selectedObjectId) || null;
 
@@ -227,7 +232,8 @@ const GameEditor = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div className="h-screen bg-background flex flex-col overflow-hidden">
+      {/* Top Toolbar */}
       <GameCreatorToolbar
         title={title}
         onTitleChange={setTitle}
@@ -240,51 +246,86 @@ const GameEditor = () => {
         onBackgroundChange={setBackgroundColor}
       />
 
+      {/* Main Layout: Fixed left sidebar + flexible workspace */}
       <div className="flex-1 flex overflow-hidden">
-        {/* Left sidebar - Object Palette */}
-        <aside className="w-56 p-4 border-r border-border overflow-y-auto bg-card/50">
-          <ObjectPalette 
-            onDragStart={handleDragStart} 
-            onTouchDragStart={handleTouchDragStart} 
-          />
+        {/* Left Sidebar - Fixed 280px width */}
+        <aside className="w-[280px] min-w-[280px] max-w-[280px] flex flex-col border-r border-border bg-card/80 overflow-hidden">
           
-          {/* Description */}
-          <div className="mt-6 pt-4 border-t border-border">
-            <h3 className="font-display font-bold text-foreground text-sm uppercase tracking-wider mb-2">
-              📝 Description
-            </h3>
-            <textarea
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              placeholder="Tell players about your game..."
-              className="w-full h-20 bg-background border border-border rounded-lg p-2 text-sm resize-none"
-            />
+          {/* Explorer Panel - Objects List */}
+          <div className="flex flex-col border-b border-border">
+            <button
+              onClick={() => setExplorerOpen(!explorerOpen)}
+              className="flex items-center gap-2 px-3 py-2 bg-muted/50 hover:bg-muted text-sm font-semibold text-foreground"
+            >
+              {explorerOpen ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
+              <Layers className="w-4 h-4" />
+              Explorer
+              <span className="ml-auto text-xs text-muted-foreground bg-background px-1.5 py-0.5 rounded">
+                {objects.length}
+              </span>
+            </button>
+            
+            {explorerOpen && (
+              <div className="p-3 max-h-[200px] overflow-y-auto">
+                <ObjectPalette 
+                  onDragStart={handleDragStart} 
+                  onTouchDragStart={handleTouchDragStart} 
+                />
+              </div>
+            )}
+          </div>
+
+          {/* Properties Panel */}
+          <div className="flex flex-col flex-1 overflow-hidden">
+            <button
+              onClick={() => setPropertiesOpen(!propertiesOpen)}
+              className="flex items-center gap-2 px-3 py-2 bg-muted/50 hover:bg-muted text-sm font-semibold text-foreground"
+            >
+              {propertiesOpen ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
+              Properties
+            </button>
+            
+            {propertiesOpen && (
+              <div className="flex-1 overflow-y-auto p-3">
+                <PropertiesPanel
+                  selectedObject={selectedObject}
+                  onUpdateObject={handleUpdateObject}
+                  onDeleteObject={handleDeleteObject}
+                />
+                
+                {/* Description field */}
+                <div className="mt-4 pt-4 border-t border-border">
+                  <label className="text-xs font-medium text-muted-foreground mb-2 block">
+                    Game Description
+                  </label>
+                  <textarea
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    placeholder="Tell players about your game..."
+                    className="w-full h-20 bg-background border border-border rounded-lg p-2 text-sm resize-none focus:ring-1 focus:ring-primary focus:border-primary"
+                  />
+                </div>
+              </div>
+            )}
           </div>
         </aside>
 
-        {/* Main workspace */}
-        <Workspace
-          objects={objects}
-          draggingType={draggingType}
-          touchDraggingType={touchDraggingType}
-          onAddObject={handleAddObject}
-          onMoveObject={handleMoveObject}
-          onResizeObject={handleResizeObject}
-          onSelectObject={setSelectedObjectId}
-          onDeleteObject={handleDeleteObject}
-          selectedObjectId={selectedObjectId}
-          backgroundColor={backgroundColor}
-          onTouchDragEnd={handleTouchDragEnd}
-        />
-
-        {/* Right sidebar - Properties Panel */}
-        <aside className="w-64 p-4 border-l border-border overflow-y-auto bg-card/50">
-          <PropertiesPanel
-            selectedObject={selectedObject}
-            onUpdateObject={handleUpdateObject}
+        {/* Main Workspace - Takes remaining space on the right */}
+        <main className="flex-1 overflow-hidden">
+          <Workspace
+            objects={objects}
+            draggingType={draggingType}
+            touchDraggingType={touchDraggingType}
+            onAddObject={handleAddObject}
+            onMoveObject={handleMoveObject}
+            onResizeObject={handleResizeObject}
+            onSelectObject={setSelectedObjectId}
             onDeleteObject={handleDeleteObject}
+            selectedObjectId={selectedObjectId}
+            backgroundColor={backgroundColor}
+            onTouchDragEnd={handleTouchDragEnd}
           />
-        </aside>
+        </main>
       </div>
 
       <GamePreviewModal
