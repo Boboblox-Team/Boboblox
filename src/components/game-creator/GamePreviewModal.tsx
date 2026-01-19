@@ -42,69 +42,74 @@ export const GamePreviewModal = ({ isOpen, onClose, gameData, title }: GamePrevi
     }
   }, [isOpen, resetGame]);
 
+  // ⭐ FIXED MOVEMENT LOGIC — no more snapping back
   useEffect(() => {
     if (!isOpen || gameState !== "playing") return;
 
     const handleKeyDown = (e: KeyboardEvent) => {
       const speed = 10;
-      let newX = playerPos.x;
-      let newY = playerPos.y;
 
-      switch (e.key) {
-        case "ArrowUp":
-        case "w":
-        case "W":
-          newY = Math.max(0, playerPos.y - speed);
-          break;
-        case "ArrowDown":
-        case "s":
-        case "S":
-          newY = Math.min(300, playerPos.y + speed);
-          break;
-        case "ArrowLeft":
-        case "a":
-        case "A":
-          newX = Math.max(0, playerPos.x - speed);
-          break;
-        case "ArrowRight":
-        case "d":
-        case "D":
-          newX = Math.min(500, playerPos.x + speed);
-          break;
-      }
+      setPlayerPos(prev => {
+        let newX = prev.x;
+        let newY = prev.y;
 
-      setPlayerPos({ x: newX, y: newY });
-
-      gameData.elements.forEach(el => {
-        if (el.type === "player" || collectedItems.includes(el.id)) return;
-
-        const collision =
-          newX < el.x + el.width &&
-          newX + player.width > el.x &&
-          newY < el.y + el.height &&
-          newY + player.height > el.y;
-
-        if (collision) {
-          switch (el.type) {
-            case "coin":
-              setCollectedItems(prev => [...prev, el.id]);
-              setScore(prev => prev + 10);
-              break;
-            case "enemy":
-            case "spike":
-              setGameState("lost");
-              break;
-            case "goal":
-              setGameState("won");
-              break;
-          }
+        switch (e.key) {
+          case "ArrowUp":
+          case "w":
+          case "W":
+            newY = Math.max(0, prev.y - speed);
+            break;
+          case "ArrowDown":
+          case "s":
+          case "S":
+            newY = Math.min(300, prev.y + speed);
+            break;
+          case "ArrowLeft":
+          case "a":
+          case "A":
+            newX = Math.max(0, prev.x - speed);
+            break;
+          case "ArrowRight":
+          case "d":
+          case "D":
+            newX = Math.min(500, prev.x + speed);
+            break;
         }
+
+        // Collision detection
+        gameData.elements.forEach(el => {
+          if (el.type === "player" || collectedItems.includes(el.id)) return;
+
+          const collision =
+            newX < el.x + el.width &&
+            newX + player.width > el.x &&
+            newY < el.y + el.height &&
+            newY + player.height > el.y;
+
+          if (collision) {
+            switch (el.type) {
+              case "coin":
+                setCollectedItems(prev => [...prev, el.id]);
+                setScore(prev => prev + 10);
+                break;
+              case "enemy":
+              case "spike":
+                setGameState("lost");
+                break;
+              case "goal":
+                setGameState("won");
+                break;
+            }
+          }
+        });
+
+        return { x: newX, y: newY };
       });
     };
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isOpen, playerPos, gameData, player, gameState, collectedItems]);
+  }, [isOpen, gameState, gameData, collectedItems, player]);
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -120,6 +125,7 @@ export const GamePreviewModal = ({ isOpen, onClose, gameData, title }: GamePrevi
           className="relative w-full aspect-[16/10] rounded-lg overflow-hidden"
           style={{ backgroundColor: gameData.backgroundColor }}
         >
+          {/* Render all game objects except player */}
           {gameData.elements.map(el => {
             if (el.type === "player") return null;
             if (collectedItems.includes(el.id)) return null;
@@ -146,6 +152,7 @@ export const GamePreviewModal = ({ isOpen, onClose, gameData, title }: GamePrevi
             );
           })}
 
+          {/* Player */}
           <div
             className="absolute rounded-lg flex items-center justify-center transition-all duration-75"
             style={{
@@ -159,6 +166,7 @@ export const GamePreviewModal = ({ isOpen, onClose, gameData, title }: GamePrevi
             🎮
           </div>
 
+          {/* Win/Lose overlay */}
           {gameState !== "playing" && (
             <div className="absolute inset-0 bg-background/80 flex flex-col items-center justify-center gap-4">
               <p className="text-4xl font-display font-bold">
