@@ -239,30 +239,32 @@ export const Workspace = ({
   };
 
   return (
-    <div className="relative flex-1 flex flex-col">
-      {/* Toolbar */}
-      <div className="flex items-center gap-2 p-2 bg-card border-b border-border">
-        <Button variant="outline" size="sm" onClick={() => handleZoom(0.1)}>
-          <ZoomIn className="w-4 h-4" />
-        </Button>
-        <span className="text-sm text-muted-foreground min-w-[50px] text-center">
-          {Math.round(zoom * 100)}%
-        </span>
-        <Button variant="outline" size="sm" onClick={() => handleZoom(-0.1)}>
-          <ZoomOut className="w-4 h-4" />
-        </Button>
-        <div className="h-4 w-px bg-border mx-2" />
-        <div className="flex items-center gap-1 text-xs text-muted-foreground">
-          <Move className="w-3 h-3" />
-          <span>Hold Alt + drag to pan</span>
+    <div className="relative h-full w-full flex flex-col overflow-hidden">
+      {/* Workspace Toolbar - Clean and kid-friendly */}
+      <div className="flex items-center gap-3 px-4 py-2 bg-card border-b border-border shrink-0">
+        <div className="flex items-center gap-1 bg-muted rounded-lg p-1">
+          <Button variant="ghost" size="sm" onClick={() => handleZoom(0.1)} className="h-7 w-7 p-0">
+            <ZoomIn className="w-4 h-4" />
+          </Button>
+          <span className="text-xs font-medium text-foreground min-w-[45px] text-center">
+            {Math.round(zoom * 100)}%
+          </span>
+          <Button variant="ghost" size="sm" onClick={() => handleZoom(-0.1)} className="h-7 w-7 p-0">
+            <ZoomOut className="w-4 h-4" />
+          </Button>
+        </div>
+        <div className="h-4 w-px bg-border" />
+        <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+          <Move className="w-3.5 h-3.5" />
+          <span>Alt + drag to move view</span>
         </div>
       </div>
 
-      {/* Workspace container */}
+      {/* Workspace container - Game preview area */}
       <div
         ref={containerRef}
-        className="flex-1 overflow-hidden bg-muted/50 cursor-default"
-        style={{ cursor: isPanning ? 'grabbing' : (movingObject ? 'move' : 'default') }}
+        className="flex-1 overflow-hidden bg-muted/30"
+        style={{ cursor: isPanning ? 'grabbing' : (movingObject ? 'move' : 'crosshair') }}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
