@@ -16,7 +16,7 @@ import PlayPage from "./pages/play";
 import Profile from "./pages/Profile";
 import ProfileEditor from "./pages/ProfileEditor";
 import Lore from "./pages/Lore";
-
+import Cutscene from "./pages/Cutscene";
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -37,6 +37,7 @@ const App = () => (
           <Route path="/create/edit/:id" element={<GameEditor />} />
           <Route path="/play/:id" element={<PlayPage />} />
           <Route path="/lore" element={<Lore />} />
+          <Route path="/cutscene/:id" element={<Cutscene />} />
 
           <Route path="/profile" element={<Profile />} />
           <Route path="/profile/edit" element={<ProfileEditor />} />

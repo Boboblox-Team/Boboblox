@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Book, Users, Globe, Zap, Clock, ChevronRight, Sparkles } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { Book, Users, Globe, Zap, Clock, ChevronRight, Sparkles, Play, Shield, Code, Heart, Star } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 type TabType = "story" | "characters" | "worlds" | "timeline";
 
@@ -326,7 +328,7 @@ const CharacterCard = ({ name, role, description, traits, color }: CharacterCard
 
 const WorldsSection = () => {
   const existingWorlds = [
-    { name: "Tropical Island", description: "Sunny beaches and palm trees. A peaceful starting area for new Explorers.", status: "active" },
+    { name: "Tropical Island", description: "Sunny beaches and palm trees. A peaceful starting area for new Explorers.", status: "active", cutsceneId: "the-core-awakens" },
     { name: "City Center", description: "A bustling urban environment with tall buildings and busy streets.", status: "active" },
     { name: "Snowy Mountains", description: "Frozen peaks and icy caves. Home to resilient Bloxlings.", status: "active" },
     { name: "Desert Dunes", description: "Endless golden sands hiding ancient secrets beneath.", status: "active" },
@@ -373,43 +375,58 @@ const WorldsSection = () => {
 };
 
 interface WorldCardProps {
-  world: { name: string; description: string; status: string };
+  world: { name: string; description: string; status: string; cutsceneId?: string };
   index: number;
   locked?: boolean;
 }
 
-const WorldCard = ({ world, index, locked }: WorldCardProps) => (
-  <motion.div
-    initial={{ opacity: 0, x: -20 }}
-    whileInView={{ opacity: 1, x: 0 }}
-    viewport={{ once: true }}
-    transition={{ delay: index * 0.1 }}
-    className={cn(
-      "flex items-center gap-4 p-4 rounded-lg border transition-all",
-      locked
-        ? "bg-muted/50 border-border/50 opacity-75"
-        : "bg-card border-border hover:border-primary/50"
-    )}
-  >
-    <div className={cn(
-      "w-12 h-12 rounded-lg flex items-center justify-center",
-      locked ? "bg-muted" : "bg-primary/10"
-    )}>
-      {locked ? (
-        <span className="text-xl">🔒</span>
-      ) : (
-        <Globe className="w-6 h-6 text-primary" />
+const WorldCard = ({ world, index, locked }: WorldCardProps) => {
+  const navigate = useNavigate();
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, x: -20 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay: index * 0.1 }}
+      className={cn(
+        "flex items-center gap-4 p-4 rounded-lg border transition-all",
+        locked
+          ? "bg-muted/50 border-border/50 opacity-75"
+          : "bg-card border-border hover:border-primary/50"
       )}
-    </div>
-    <div className="flex-1">
-      <h3 className="font-display font-bold">{world.name}</h3>
-      <p className="text-sm text-muted-foreground">{world.description}</p>
-    </div>
-    {!locked && (
-      <ChevronRight className="w-5 h-5 text-muted-foreground" />
-    )}
-  </motion.div>
-);
+    >
+      <div className={cn(
+        "w-12 h-12 rounded-lg flex items-center justify-center",
+        locked ? "bg-muted" : "bg-primary/10"
+      )}>
+        {locked ? (
+          <span className="text-xl">🔒</span>
+        ) : (
+          <Globe className="w-6 h-6 text-primary" />
+        )}
+      </div>
+      <div className="flex-1">
+        <h3 className="font-display font-bold">{world.name}</h3>
+        <p className="text-sm text-muted-foreground">{world.description}</p>
+      </div>
+      {!locked && world.cutsceneId && (
+        <Button
+          size="sm"
+          variant="outline"
+          onClick={() => navigate(`/cutscene/${world.cutsceneId}`)}
+          className="gap-1.5 border-primary/50 text-primary hover:bg-primary/10"
+        >
+          <Play className="w-3.5 h-3.5" />
+          Watch Cut-Scene
+        </Button>
+      )}
+      {!locked && !world.cutsceneId && (
+        <ChevronRight className="w-5 h-5 text-muted-foreground" />
+      )}
+    </motion.div>
+  );
+};
 
 const TimelineSection = () => {
   const timeline = [
