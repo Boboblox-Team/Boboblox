@@ -15,6 +15,7 @@ import NotFound from "./pages/NotFound";
 import PlayPage from "./pages/play";
 import Profile from "./pages/Profile";
 import ProfileEditor from "./pages/ProfileEditor";
+import Lore from "./pages/Lore";
 
 const queryClient = new QueryClient();
 
@@ -35,6 +36,7 @@ const App = () => (
           <Route path="/create/new" element={<GameEditor />} />
           <Route path="/create/edit/:id" element={<GameEditor />} />
           <Route path="/play/:id" element={<PlayPage />} />
+          <Route path="/lore" element={<Lore />} />
 
           <Route path="/profile" element={<Profile />} />
           <Route path="/profile/edit" element={<ProfileEditor />} />

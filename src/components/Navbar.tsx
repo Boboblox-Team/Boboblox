@@ -55,8 +55,8 @@ const Navbar = () => {
           Shop
         </NavLink>
 
-        <NavLink to="/about" className="hover:text-blue-400" activeClassName="text-blue-500 font-bold">
-          About
+        <NavLink to="/lore" className="hover:text-blue-400" activeClassName="text-blue-500 font-bold">
+          Codex
         </NavLink>
 
         {user && (
