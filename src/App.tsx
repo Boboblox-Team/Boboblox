@@ -17,6 +17,12 @@ import Profile from "./pages/Profile";
 import ProfileEditor from "./pages/ProfileEditor";
 import Lore from "./pages/Lore";
 import Cutscene from "./pages/Cutscene";
+import Story from "./pages/Story";
+import Characters from "./pages/Characters";
+import Worlds from "./pages/Worlds";
+import CreatorCode from "./pages/CreatorCode";
+import Cutscenes from "./pages/Cutscenes";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -36,7 +42,14 @@ const App = () => (
           <Route path="/create/new" element={<GameEditor />} />
           <Route path="/create/edit/:id" element={<GameEditor />} />
           <Route path="/play/:id" element={<PlayPage />} />
+          
+          {/* Lore & Story Pages */}
           <Route path="/lore" element={<Lore />} />
+          <Route path="/story" element={<Story />} />
+          <Route path="/characters" element={<Characters />} />
+          <Route path="/worlds" element={<Worlds />} />
+          <Route path="/creator-code" element={<CreatorCode />} />
+          <Route path="/cutscenes" element={<Cutscenes />} />
           <Route path="/cutscene/:id" element={<Cutscene />} />
 
           <Route path="/profile" element={<Profile />} />
