@@ -1,11 +1,17 @@
 import { NavLink } from "@/components/NavLink";
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState } from "react";
+import { ChevronDown } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const Navbar = () => {
   const [user, setUser] = useState(null);
 
-  // Load user on mount
   useEffect(() => {
     const loadUser = async () => {
       const { data } = await supabase.auth.getUser();
@@ -14,7 +20,6 @@ const Navbar = () => {
 
     loadUser();
 
-    // Listen for login/logout changes
     const { data: listener } = supabase.auth.onAuthStateChange(
       (_event, session) => {
         setUser(session?.user || null);
@@ -26,7 +31,6 @@ const Navbar = () => {
     };
   }, []);
 
-  // Sign out
   const handleSignOut = async () => {
     await supabase.auth.signOut();
     window.location.href = "/";
@@ -55,9 +59,33 @@ const Navbar = () => {
           Shop
         </NavLink>
 
-        <NavLink to="/lore" className="hover:text-blue-400" activeClassName="text-blue-500 font-bold">
-          Codex
-        </NavLink>
+        {/* Codex Dropdown */}
+        <DropdownMenu>
+          <DropdownMenuTrigger className="flex items-center gap-1 hover:text-blue-400 transition-colors outline-none">
+            Codex
+            <ChevronDown className="w-4 h-4" />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="start" className="bg-card border-border">
+            <DropdownMenuItem asChild>
+              <a href="/lore" className="cursor-pointer">📖 Overview</a>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <a href="/story" className="cursor-pointer">📚 Story</a>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <a href="/characters" className="cursor-pointer">👥 Characters</a>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <a href="/worlds" className="cursor-pointer">🌍 Worlds</a>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <a href="/cutscenes" className="cursor-pointer">🎬 Cut-Scenes</a>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <a href="/creator-code" className="cursor-pointer">💻 Creator-Code</a>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
 
         {user && (
           <NavLink to="/profile" className="hover:text-blue-400" activeClassName="text-blue-500 font-bold">
