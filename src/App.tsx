@@ -7,10 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
-import Games from "./pages/Games";
 import Shop from "./pages/Shop";
-import Create from "./pages/Create";
-import GameEditor from "./pages/GameEditor";
 import NotFound from "./pages/NotFound";
 import PlayPage from "./pages/play";
 import Profile from "./pages/Profile";
@@ -36,11 +33,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/auth" element={<Auth />} />
-          <Route path="/games" element={<Games />} />
           <Route path="/shop" element={<Shop />} />
-          <Route path="/create" element={<Create />} />
-          <Route path="/create/new" element={<GameEditor />} />
-          <Route path="/create/edit/:id" element={<GameEditor />} />
           <Route path="/play/:id" element={<PlayPage />} />
           
           {/* Lore & Story Pages */}
