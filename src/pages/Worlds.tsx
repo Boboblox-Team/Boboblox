@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { Globe, Lock, Play, Sparkles, MapPin, ChevronRight } from "lucide-react";
+import { Globe, Lock, Play, Sparkles, MapPin, ChevronRight, Compass } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -105,9 +105,17 @@ const Worlds = () => {
             <h1 className="text-4xl md:text-6xl font-display font-bold mb-4">
               <span className="text-gradient-cyan">Worlds</span> of Boboblox
             </h1>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-6">
               Explore the ten realms of the Boboblox universe — five existing and five yet to be unlocked.
             </p>
+            <Button
+              onClick={() => navigate("/worlds/explore")}
+              className="gap-2"
+              size="lg"
+            >
+              <Compass className="w-5 h-5" />
+              Explore in 3D
+            </Button>
           </motion.div>
         </div>
       </section>

@@ -19,6 +19,7 @@ import Characters from "./pages/Characters";
 import Worlds from "./pages/Worlds";
 import CreatorCode from "./pages/CreatorCode";
 import Cutscenes from "./pages/Cutscenes";
+import WorldExplorer from "./pages/WorldExplorer";
 
 const queryClient = new QueryClient();
 
@@ -41,6 +42,7 @@ const App = () => (
           <Route path="/story" element={<Story />} />
           <Route path="/characters" element={<Characters />} />
           <Route path="/worlds" element={<Worlds />} />
+          <Route path="/worlds/explore" element={<WorldExplorer />} />
           <Route path="/creator-code" element={<CreatorCode />} />
           <Route path="/cutscenes" element={<Cutscenes />} />
           <Route path="/cutscene/:id" element={<Cutscene />} />

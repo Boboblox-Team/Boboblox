@@ -1,0 +1,113 @@
+import { useState, useEffect, useCallback } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "./useAuth";
+import type { RealtimeChannel } from "@supabase/supabase-js";
+
+const PRESENCE_COLORS = [
+  "#f43f5e", "#8b5cf6", "#ec4899", "#f59e0b",
+  "#10b981", "#6366f1", "#14b8a6", "#f97316",
+];
+
+function pickColor(userId: string) {
+  let hash = 0;
+  for (let i = 0; i < userId.length; i++) {
+    hash = userId.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  return PRESENCE_COLORS[Math.abs(hash) % PRESENCE_COLORS.length];
+}
+
+export interface PresencePlayer {
+  userId: string;
+  username: string;
+  color: string;
+  position: [number, number, number];
+}
+
+export const usePresence = (channelName: string) => {
+  const { user } = useAuth();
+  const [otherPlayers, setOtherPlayers] = useState<PresencePlayer[]>([]);
+  const [onlineCount, setOnlineCount] = useState(0);
+  const [channel, setChannel] = useState<RealtimeChannel | null>(null);
+
+  useEffect(() => {
+    if (!user) return;
+
+    const username =
+      user.user_metadata?.username ||
+      user.email?.split("@")[0] ||
+      "Explorer";
+    const color = pickColor(user.id);
+
+    // Random starting position near an island
+    const startPos: [number, number, number] = [
+      (Math.random() - 0.5) * 10,
+      1,
+      (Math.random() - 0.5) * 10,
+    ];
+
+    const ch = supabase.channel(channelName, {
+      config: { presence: { key: user.id } },
+    });
+
+    ch.on("presence", { event: "sync" }, () => {
+      const state = ch.presenceState<{
+        userId: string;
+        username: string;
+        color: string;
+        position: [number, number, number];
+      }>();
+
+      const players: PresencePlayer[] = [];
+      for (const [key, presences] of Object.entries(state)) {
+        if (key === user.id) continue;
+        const p = presences[0];
+        if (p) {
+          players.push({
+            userId: p.userId,
+            username: p.username,
+            color: p.color,
+            position: p.position,
+          });
+        }
+      }
+      setOtherPlayers(players);
+      setOnlineCount(Object.keys(state).length);
+    });
+
+    ch.subscribe(async (status) => {
+      if (status === "SUBSCRIBED") {
+        await ch.track({
+          userId: user.id,
+          username,
+          color,
+          position: startPos,
+        });
+      }
+    });
+
+    setChannel(ch);
+
+    return () => {
+      ch.unsubscribe();
+    };
+  }, [user, channelName]);
+
+  const updatePosition = useCallback(
+    async (position: [number, number, number]) => {
+      if (!channel || !user) return;
+      const username =
+        user.user_metadata?.username ||
+        user.email?.split("@")[0] ||
+        "Explorer";
+      await channel.track({
+        userId: user.id,
+        username,
+        color: pickColor(user.id),
+        position,
+      });
+    },
+    [channel, user]
+  );
+
+  return { otherPlayers, onlineCount, updatePosition };
+};
