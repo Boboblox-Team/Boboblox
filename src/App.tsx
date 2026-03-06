@@ -9,7 +9,6 @@ import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import Shop from "./pages/Shop";
 import NotFound from "./pages/NotFound";
-import PlayPage from "./pages/play";
 import Profile from "./pages/Profile";
 import ProfileEditor from "./pages/ProfileEditor";
 import Lore from "./pages/Lore";
@@ -35,7 +34,6 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/shop" element={<Shop />} />
-          <Route path="/play/:id" element={<PlayPage />} />
           
           {/* Lore & Story Pages */}
           <Route path="/lore" element={<Lore />} />
