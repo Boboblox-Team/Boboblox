@@ -1,6 +1,6 @@
 # 🎮 **Boboblox**
 
-<img width="140" height="140" alt="boboblox-logo" src="https://github.com/user-attachments/assets/0473e9c9-21e3-48c9-a433-090f9e8e6c78">
+<img width="100" height="100" src="https://github.com/user-attachments/assets/8a981d89-d736-4eec-9d10-30e648ea10e5" />
 
 **Boboblox** is a kid‑friendly gaming platform where players can explore worlds, play games, customize avatars, and unlock special features — all in a safe, supervised environment.
 
