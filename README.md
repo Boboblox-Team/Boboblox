@@ -7,45 +7,57 @@
 > [!IMPORTANT]
 > Boboblox requires a **supervised Google Account** for safe play and purchases.
 
-This README explains everything about the platform so anyone can understand Boboblox at a glance.
-
 ---
 
-# 🧩 **What Is Boboblox?**
+## 🧩 What Is Boboblox?
 
 Boboblox is a **safe**, **creative**, and **fun** online world designed for ages **7–15**.
 
 Players can:
 
-- 🌍 Explore themed worlds  
-- 🎮 Play mini‑games  
-- 🧍 Customize their avatars  
-- 💰 Buy Bobobux with real money  
-- 🎁 Unlock items and accessories  
-- 👨‍👩‍👧 Play safely with parental supervision  
-
-> [!NOTE]
-> Boboblox is built to be simple, safe, and fun for young players.
+- 🌍 Explore themed 3D worlds with other players in real time
+- 🎮 Play and create mini‑games
+- 🧍 Customize their avatars
+- 💰 Buy Bobobux with real money
+- 🎁 Unlock items and accessories
+- 📖 Discover the Boboblox lore and story
+- 👨‍👩‍👧 Play safely with parental supervision
 
 ---
 
-# 🌟 **Why Boboblox Is Special**
+## 🌟 Why Boboblox Is Special
 
 | Feature | Why It Matters |
-|--------|----------------|
+|---------|----------------|
 | 🧒 Kid‑Friendly | Designed for ages 7–15 |
 | 🛡️ Safe | Parent‑supervised accounts |
-| 🎨 Creative | Avatars, items, worlds, and more |
+| 🎨 Creative | Avatars, items, worlds, game editor |
+| 🌐 Multiplayer | Real‑time presence — see others exploring |
 | 🎮 Fun Games | Obbies, simulators, tycoons, racing |
 | 💰 Real‑Money Economy | Bobobux can only be bought |
 | 📱 Easy Access | Works on phones, tablets, and computers |
 
-> [!TIP]
-> Boboblox updates often with new games, items, and events.
+---
+
+## 🌍 3D World Explorer
+
+The **World Explorer** lets players fly around a 3D ocean map with five themed islands:
+
+| Island | Theme | Description |
+|--------|-------|-------------|
+| 🏝️ Tropical Island | Tropical | Palm trees, beaches, and sunshine |
+| 🏙️ City Center | Urban | Skyscrapers and city life |
+| ❄️ Snowy Mountains | Winter | Frozen peaks and snowfall |
+| 🏜️ Desert Dunes | Desert | Sandy landscapes and ancient ruins |
+| 🌲 Forest Adventure | Forest | Dense woods and hidden secrets |
+
+- **Orbit controls** — click and drag to rotate the camera, scroll to zoom
+- **Multiplayer presence** — see other players' cursors live on the map
+- **Island details** — click any island to learn more
 
 ---
 
-# 🎲 **Games on Boboblox**
+## 🎲 Games
 
 Boboblox includes a growing library of kid‑friendly games.
 
@@ -61,58 +73,54 @@ Boboblox includes a growing library of kid‑friendly games.
 
 ---
 
-# 🧍 **Avatar Customization**
+## 🛠️ Game Editor
+
+Creators can build their own games using the **drag‑and‑drop Game Editor**:
+
+- 🧱 Object palette — place blocks, NPCs, items, and more
+- ⚙️ Properties panel — configure position, size, physics
+- 🔗 Logic panel — add behaviors and triggers
+- ▶️ Live preview — test your game instantly
+
+---
+
+## 📖 Lore & Story
+
+Boboblox has a rich narrative world:
+
+- **Story** — follow the main Boboblox storyline
+- **Characters** — meet the heroes and villains
+- **Cutscenes** — cinematic moments that bring the story to life
+- **Creator Codes** — special codes from content creators
+
+---
+
+## 🧍 Avatar Customization
 
 Players can personalize their look with:
 
-- Outfits  
-- Hats  
-- Accessories  
-- Faces  
-- Colors  
-- Animations  
+- Outfits & hats
+- Accessories & backpacks
+- Faces & colors
+- Animations & emotes
 
 > [!TIP]
 > Seasonal events unlock limited‑time avatar items.
 
 ---
 
-# 💰 **Bobobux (In‑Game Currency)**
+## 💰 Bobobux (In‑Game Currency)
 
 Bobobux is the official currency of Boboblox.
 
 > [!IMPORTANT]
-> **Bobobux can only be purchased with real money.**  
+> **Bobobux can only be purchased with real money.**
 > It cannot be earned through gameplay.
 
-Players can use Bobobux to buy:
-
-- Outfits  
-- Accessories  
-- Boosts  
-- Special features  
-- Premium items  
-
----
-
-## 📱 Buying Bobobux (Kids & Parents)
-
-Kids can buy Bobobux **with their own real money** *if their parent approves it*.
-
-Parents can also buy Bobobux directly for their child.
-
-> [!CAUTION]
-> Kids cannot buy Bobobux unless their parent approves the purchase through Google Account Supervision.
-
-> [!WARNING]
-> Kids should **never** buy Bobobux without asking a parent first.
-
----
-
-## 📦 **Bobobux Packages**
+### 📦 Bobobux Packages
 
 | Package | Bonus | Total Bobobux | Price |
-|--------|--------|----------------|--------|
+|---------|-------|---------------|-------|
 | 100 | — | 100 | £3.40 |
 | 250 | +25 | 275 | £7.99 |
 | 500 | +75 | 575 | £14.99 |
@@ -120,116 +128,65 @@ Parents can also buy Bobobux directly for their child.
 | 2,500 | +625 | 3,125 | £64.99 |
 | 5,000 | +1,500 | 6,500 | £119.99 |
 
-### 🎁 **Why Buy Bobobux?**
+---
 
-| Benefit | Description |
-|---------|-------------|
-| ⚡ **Instant Delivery** | Bobobux is added to your account immediately |
-| 🎁 **Bonus Rewards** | Larger packages include extra Bobobux |
-| 🛡️ **Google Supervision Controls** | Parents approve and manage all purchases |
+## 💳 Payments & Safety
+
+All purchases are handled through **Google Account Supervision**:
+
+- ✅ Parent approval for purchases
+- 📊 Spending limits
+- 🔔 Purchase notifications
+- 🔒 Secure Google‑managed checkout
+
+> [!CAUTION]
+> Kids cannot buy Bobobux unless their parent approves the purchase.
 
 ---
 
-# 💳 **Payments & Safety (Google Account Supervision)**
-
-All purchases in Boboblox are handled safely through **Google Account Supervision**, which gives parents full control.
-
-Google Supervision provides:
-
-- Parent approval for purchases  
-- Spending limits  
-- Activity monitoring  
-- Purchase notifications  
-- Secure Google‑managed checkout  
-
-> [!IMPORTANT]
-> Parents can manage all settings from their **Google Family Dashboard**.
-
----
-
-# 👨‍👩‍👧 **Parental Safety Features**
-
-Boboblox is built with safety as the #1 priority.
+## 🛡️ Parental Safety Features
 
 | Safety Feature | Purpose |
-|----------------|----------|
-| **Google Supervision Spending Limits** | Parents can set maximum purchase amounts |
-| **Purchase Alerts** | Parents get notified instantly |
-| **Google‑Managed Checkout** | All payments handled safely by Google |
-| **Parent Approval Required** | Kids must ask a parent before buying |
-| **Safe Chat** | Filtered and monitored chat system |
+|----------------|---------|
+| **Spending Limits** | Parents set maximum purchase amounts |
+| **Purchase Alerts** | Instant notifications |
+| **Google‑Managed Checkout** | All payments handled by Google |
+| **Parent Approval Required** | Kids must ask before buying |
+| **Safe Chat** | Filtered and monitored |
 | **No Unsafe Content** | All games are kid‑friendly |
 
-> [!WARNING]
-> Boboblox does **not** allow unsafe chat, bullying, or inappropriate content.
-
 ---
 
-# 🌍 **Worlds**
-
-Players can explore themed environments such as:
-
-- 🏝️ Tropical Island  
-- 🏙️ City Center  
-- ❄️ Snowy Mountains  
-- 🏜️ Desert Dunes  
-- 🌲 Forest Adventure  
-
-Each world includes games, secrets, and collectibles.
-
----
-
-# 🎁 **Items & Accessories**
-
-Players can unlock:
-
-- Hats  
-- Backpacks  
-- Pets  
-- Trails  
-- Emotes  
-- Boosts  
-
-> [!NOTE]
-> Some items can be bought with Bobobux. Others may be free during events.
-
----
-
-# 🏆 **Achievements & Badges**
+## 🏆 Achievements & Badges
 
 Kids can earn badges for:
 
-- Completing games  
-- Reaching milestones  
-- Collecting items  
-- Exploring worlds  
-- Winning races  
-
-> [!TIP]
-> Badges sometimes unlock special rewards.
+- Completing games
+- Reaching milestones
+- Collecting items
+- Exploring worlds
+- Winning races
 
 ---
 
-# 🛠️ **Technology Behind Boboblox**
+## ⚙️ Tech Stack
 
-Boboblox is built using:
-
-- ⚛️ React  
-- 🟦 TypeScript  
-- 🎨 TailwindCSS  
-- 🌐 Web APIs  
-- 🔐 Google Account Supervision  
-
-The platform is optimized for speed, safety, and accessibility.
-
----
-
-# 👥 **Team**
-
-Boboblox is created and maintained by the **Boboblox Team**,  
-focused on **safety**, **creativity**, and **fun** for kids everywhere.
+| Technology | Purpose |
+|------------|---------|
+| ⚛️ React + TypeScript | UI framework |
+| 🎨 Tailwind CSS | Styling & design system |
+| 🧊 React Three Fiber + Three.js | 3D world explorer |
+| 🔄 Supabase Realtime | Multiplayer presence |
+| 🗄️ Supabase | Auth, database, storage |
+| ⚡ Vite | Build tooling |
+| 🎞️ Framer Motion | Animations |
 
 ---
 
-# 📜 **Footer**
+## 👥 Team
+
+Boboblox is created and maintained by the **Boboblox Team**, focused on **safety**, **creativity**, and **fun** for kids everywhere.
+
+---
+
 © 2026 Boboblox. All rights reserved.
