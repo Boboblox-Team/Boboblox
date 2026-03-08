@@ -29,11 +29,27 @@ const OAuthConsent = () => {
     email: { label: "Email", desc: "View your email address" },
   };
 
-  // Extract app name from redirect URI for display
+  // Extract app name from redirect URI for display (mobile-safe)
   const appDomain = (() => {
+    if (!redirectUri) return clientId || "An application";
+
     try {
-      if (redirectUri) return new URL(redirectUri).hostname;
-    } catch {}
+      const url = new URL(redirectUri);
+
+      // Web URL → use hostname
+      if (url.hostname) return url.hostname;
+
+      // Mobile scheme → use protocol (strip ":")
+      if (url.protocol && url.protocol.endsWith(":")) {
+        return url.protocol.replace(":", "");
+      }
+    } catch {
+      // Bare mobile identifier like "mycoolmobileapp"
+      if (!redirectUri.includes("://")) {
+        return redirectUri;
+      }
+    }
+
     return clientId || "An application";
   })();
 
@@ -49,7 +65,6 @@ const OAuthConsent = () => {
 
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (!session?.user) {
-        // Redirect to login, preserving all OAuth params so we come back
         const consentUrl = window.location.pathname + window.location.search;
         navigate(`/auth?redirect=${encodeURIComponent(consentUrl)}`);
       } else {
@@ -76,7 +91,6 @@ const OAuthConsent = () => {
       if (codeChallengeMethod) params.set("code_challenge_method", codeChallengeMethod);
       params.set("consent", "approved");
 
-      // Redirect to Supabase OAuth authorize endpoint (external Supabase v2 instance)
       window.location.href = `https://girurweqftroscythxje.supabase.co/auth/v1/authorize?${params.toString()}`;
     } catch {
       setLoading(false);
@@ -126,13 +140,11 @@ const OAuthConsent = () => {
   return (
     <div className="min-h-screen bg-background flex items-center justify-center px-4 py-8">
       <div className="w-full max-w-sm">
-        {/* Header with Boboblox branding */}
         <div className="text-center mb-6">
           <img src={logo} alt="Boboblox" className="h-10 w-auto mx-auto mb-4" />
         </div>
 
         <div className="bg-card border border-border rounded-2xl shadow-2xl overflow-hidden">
-          {/* Top section - user identity */}
           <div className="px-6 pt-6 pb-4 border-b border-border">
             <div className="flex items-center gap-3 mb-4">
               <div className="h-10 w-10 rounded-full bg-primary/20 flex items-center justify-center">
@@ -149,7 +161,6 @@ const OAuthConsent = () => {
             </div>
           </div>
 
-          {/* Main consent content */}
           <div className="px-6 py-5">
             <div className="flex items-start gap-3 mb-5">
               <Shield className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
@@ -160,7 +171,6 @@ const OAuthConsent = () => {
               </div>
             </div>
 
-            {/* Permissions list */}
             <div className="bg-muted/30 rounded-xl p-4 mb-5">
               <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-3">
                 This will allow the app to:
@@ -185,7 +195,6 @@ const OAuthConsent = () => {
               </ul>
             </div>
 
-            {/* Security notice */}
             <div className="flex items-start gap-2 mb-5 text-xs text-muted-foreground">
               <ExternalLink className="h-3.5 w-3.5 mt-0.5 flex-shrink-0" />
               <p>
@@ -194,7 +203,6 @@ const OAuthConsent = () => {
               </p>
             </div>
 
-            {/* Action buttons */}
             <div className="space-y-2">
               <Button
                 onClick={handleApprove}
@@ -215,7 +223,6 @@ const OAuthConsent = () => {
             </div>
           </div>
 
-          {/* Footer */}
           <div className="px-6 py-3 bg-muted/20 border-t border-border">
             <p className="text-[11px] text-muted-foreground text-center leading-relaxed">
               By clicking Allow, you let this app access the info listed above.
@@ -227,7 +234,6 @@ const OAuthConsent = () => {
           </div>
         </div>
 
-        {/* Sign in as different user */}
         <div className="text-center mt-4">
           <button
             onClick={async () => {
