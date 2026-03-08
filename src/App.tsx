@@ -34,6 +34,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/auth" element={<Auth />} />
+          <Route path="/oauth/consent" element={<OAuthConsent />} />
           <Route path="/shop" element={<Shop />} />
           
           {/* Lore & Story Pages */}
