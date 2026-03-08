@@ -35,7 +35,13 @@ const Auth = () => {
     );
 
     supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session?.user) navigate("/");
+      if (session?.user) {
+        if (redirectTo) {
+          navigate(redirectTo);
+        } else {
+          navigate("/");
+        }
+      }
     });
 
     return () => subscription.unsubscribe();
