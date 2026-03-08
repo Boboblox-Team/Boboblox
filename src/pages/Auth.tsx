@@ -24,7 +24,13 @@ const Auth = () => {
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (event, session) => {
-        if (session?.user) navigate("/");
+        if (session?.user) {
+          if (redirectTo) {
+            navigate(redirectTo);
+          } else {
+            navigate("/");
+          }
+        }
       }
     );
 
