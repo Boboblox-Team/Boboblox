@@ -76,9 +76,8 @@ const OAuthConsent = () => {
       if (codeChallengeMethod) params.set("code_challenge_method", codeChallengeMethod);
       params.set("consent", "approved");
 
-      // Redirect to Supabase OAuth authorize endpoint
-      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || "https://girurweqftroscythxje.supabase.co";
-      window.location.href = `${supabaseUrl}/auth/v1/authorize?${params.toString()}`;
+      // Redirect to Supabase OAuth authorize endpoint (external Supabase v2 instance)
+      window.location.href = `https://girurweqftroscythxje.supabase.co/auth/v1/authorize?${params.toString()}`;
     } catch {
       setLoading(false);
     }
