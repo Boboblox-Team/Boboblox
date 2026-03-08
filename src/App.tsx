@@ -19,6 +19,7 @@ import Worlds from "./pages/Worlds";
 import CreatorCode from "./pages/CreatorCode";
 import Cutscenes from "./pages/Cutscenes";
 import WorldExplorer from "./pages/WorldExplorer";
+import OAuthConsent from "./pages/OAuthConsent";
 
 const queryClient = new QueryClient();
 
@@ -33,6 +34,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/auth" element={<Auth />} />
+          <Route path="/oauth/consent" element={<OAuthConsent />} />
           <Route path="/shop" element={<Shop />} />
           
           {/* Lore & Story Pages */}
