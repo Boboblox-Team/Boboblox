@@ -20,6 +20,7 @@ import CreatorCode from "./pages/CreatorCode";
 import Cutscenes from "./pages/Cutscenes";
 import WorldExplorer from "./pages/WorldExplorer";
 import OAuthConsent from "./pages/OAuthConsent";
+import OAuthCallback from "./pages/OAuthCallback";
 
 const queryClient = new QueryClient();
 

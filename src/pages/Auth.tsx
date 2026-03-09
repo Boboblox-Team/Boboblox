@@ -196,7 +196,7 @@ const Auth = () => {
                 const { data, error } = await supabase.auth.signInWithOAuth({
                   provider: "github",
                   options: {
-                    redirectTo: window.location.origin,
+                    redirectTo: `${window.location.origin}/oauth/callback`,
                     skipBrowserRedirect: true,
                   },
                 });
@@ -213,21 +213,20 @@ const Auth = () => {
                     return;
                   }
 
-                  const interval = setInterval(() => {
-                    try {
-                      if (popup.closed) {
-                        clearInterval(interval);
-                        supabase.auth.getSession().then(({ data: { session } }) => {
-                          if (session?.user) {
-                            toast.success("Welcome!");
-                            navigate(redirectTo || "/");
-                          }
+                  const handler = async (event: MessageEvent) => {
+                    if (event.data?.type === "oauth-complete") {
+                      window.removeEventListener("message", handler);
+                      if (event.data.access_token && event.data.refresh_token) {
+                        await supabase.auth.setSession({
+                          access_token: event.data.access_token,
+                          refresh_token: event.data.refresh_token,
                         });
+                        toast.success("Welcome!");
+                        navigate(redirectTo || "/");
                       }
-                    } catch {
-                      // cross-origin, ignore
                     }
-                  }, 500);
+                  };
+                  window.addEventListener("message", handler);
                 }
               }}
             >
