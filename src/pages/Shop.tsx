@@ -52,25 +52,14 @@ const packages: BobobuxPackage[] = [
 ];
 
 // ------------------------------
-// Bobibe Payment Handler
+// Purchase Handler (Bobibe removed)
 // ------------------------------
 const handlePurchase = async (packId: string) => {
   try {
-    const res = await fetch("/api/bobibe/start", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ packId }),
-    });
-
-    const data = await res.json();
-
-    if (data.checkoutUrl) {
-      window.location.href = data.checkoutUrl;
-    } else {
-      console.error("Bobibe did not return a checkout URL");
-    }
+    console.log("Purchase clicked:", packId);
+    // Add your own payment system here
   } catch (err) {
-    console.error("Bobibe payment error:", err);
+    console.error("Payment error:", err);
   }
 };
 
@@ -160,12 +149,7 @@ const Shop = () => {
               </span>
             </div>
 
-            <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/30 rounded-full px-4 py-1 mb-4">
-              <Sparkles className="w-4 h-4 text-primary" />
-              <span className="text-xs font-semibold text-primary">
-                Powered by Bobibe — the official payment system of Boboblox
-              </span>
-            </div>
+            {/* Bobibe banner removed */}
 
             <h1 className="font-display text-4xl md:text-5xl font-bold mb-4">
               Get <span className="text-gradient-cyan">Bobobux</span>
@@ -189,7 +173,6 @@ const Shop = () => {
                   Safe & Secure Purchasing
                 </h3>
                 <p className="text-muted-foreground text-sm">
-                  All Bobobux purchases are handled securely through Bobibe.
                   Parents can set spending limits in the dashboard.
                 </p>
               </div>
