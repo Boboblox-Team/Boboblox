@@ -192,13 +192,43 @@ const Auth = () => {
               type="button"
               className="w-full"
               variant="outline"
-              onClick={() => {
-                supabase.auth.signInWithOAuth({
+              onClick={async () => {
+                const { data, error } = await supabase.auth.signInWithOAuth({
                   provider: "github",
                   options: {
                     redirectTo: window.location.origin,
+                    skipBrowserRedirect: true,
                   },
                 });
+
+                if (error) {
+                  toast.error("Failed to start GitHub login");
+                  return;
+                }
+
+                if (data?.url) {
+                  const popup = window.open(data.url, "oauth", "width=500,height=600");
+                  if (!popup) {
+                    toast.error("Please allow popups for this site to sign in with GitHub.");
+                    return;
+                  }
+
+                  const interval = setInterval(() => {
+                    try {
+                      if (popup.closed) {
+                        clearInterval(interval);
+                        supabase.auth.getSession().then(({ data: { session } }) => {
+                          if (session?.user) {
+                            toast.success("Welcome!");
+                            navigate(redirectTo || "/");
+                          }
+                        });
+                      }
+                    } catch {
+                      // cross-origin, ignore
+                    }
+                  }, 500);
+                }
               }}
             >
               Continue with GitHub
