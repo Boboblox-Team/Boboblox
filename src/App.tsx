@@ -36,6 +36,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/oauth/consent" element={<OAuthConsent />} />
+          <Route path="/oauth/callback" element={<OAuthCallback />} />
           <Route path="/shop" element={<Shop />} />
           
           {/* Lore & Story Pages */}
