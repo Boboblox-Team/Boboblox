@@ -93,7 +93,7 @@ const Auth = () => {
       } else {
         const redirectUrl = `${window.location.origin}/`;
 
-        const { error } = await supabase.auth.signUp({
+        const { data, error } = await supabase.auth.signUp({
           email,
           password,
           options: {
@@ -110,7 +110,14 @@ const Auth = () => {
           return;
         }
 
-        localStorage.setItem("boboblox_username", username);
+        // ⭐ FIX: Create profile row in Supabase
+        if (data.user) {
+          await supabase.from("profiles").insert({
+            user_id: data.user.id,
+            username,
+          });
+        }
+
         toast.success("Account created successfully! You're now logged in.");
       }
     } catch {
