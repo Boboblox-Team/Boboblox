@@ -95,7 +95,7 @@ const CreatorCode = () => {
             <div className="pl-4 space-y-2">
               <div>
                 <span className="text-muted-foreground">&lt;name&gt;</span>
-                <span className="text-cyan-400">Abdulsamad</span>
+                <span className="text-cyan-400">AbdulSamad</span>
                 <span className="text-muted-foreground">&lt;/name&gt;</span>
               </div>
               <div>
