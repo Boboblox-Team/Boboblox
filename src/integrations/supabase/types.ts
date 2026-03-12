@@ -7,8 +7,6 @@ export type Json =
   | Json[]
 
 export type Database = {
-  // Allows to automatically instantiate createClient with right options
-  // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
     PostgrestVersion: "14.1"
   }
@@ -16,77 +14,92 @@ export type Database = {
     Tables: {
       profiles: {
         Row: {
-          created_at: string
-          id: string
-          updated_at: string
           user_id: string
           username: string
+          email: string
+          name: string | null
+          created_at: string
+          updated_at: string
         }
         Insert: {
-          created_at?: string
-          id?: string
-          updated_at?: string
-          user_id: string
+          user_id?: string
           username: string
+          email: string
+          name?: string | null
+          created_at?: string
+          updated_at?: string
         }
         Update: {
-          created_at?: string
-          id?: string
-          updated_at?: string
           user_id?: string
           username?: string
+          email?: string
+          name?: string | null
+          created_at?: string
+          updated_at?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "profile_user_id_fkey"
+            columns: ["user_id"]
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
       }
+
       user_games: {
         Row: {
-          created_at: string
-          description: string | null
-          game_data: Json
           id: string
+          user_id: string
+          title: string
+          description: string | null
+          thumbnail_color: string
+          game_data: Json
           is_published: boolean
           play_count: number
-          thumbnail_color: string
-          title: string
+          created_at: string
           updated_at: string
-          user_id: string
         }
         Insert: {
-          created_at?: string
-          description?: string | null
-          game_data?: Json
           id?: string
+          user_id: string
+          title: string
+          description?: string | null
+          thumbnail_color: string
+          game_data?: Json
           is_published?: boolean
           play_count?: number
-          thumbnail_color?: string
-          title: string
+          created_at?: string
           updated_at?: string
-          user_id: string
         }
         Update: {
-          created_at?: string
-          description?: string | null
-          game_data?: Json
           id?: string
+          user_id?: string
+          title?: string
+          description?: string | null
+          thumbnail_color?: string
+          game_data?: Json
           is_published?: boolean
           play_count?: number
-          thumbnail_color?: string
-          title?: string
+          created_at?: string
           updated_at?: string
-          user_id?: string
         }
         Relationships: []
       }
     }
+
     Views: {
       [_ in never]: never
     }
+
     Functions: {
       [_ in never]: never
     }
+
     Enums: {
       [_ in never]: never
     }
+
     CompositeTypes: {
       [_ in never]: never
     }
