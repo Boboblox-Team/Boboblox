@@ -15,7 +15,7 @@ const ProfileEditor = () => {
       const { data } = await supabase
         .from("profiles")
         .select("username")
-        .eq("id", auth.user.id)
+        .eq("user_id", auth.user.id)   // ✅ FIXED: use user_id
         .single();
 
       if (data) {
@@ -37,7 +37,7 @@ const ProfileEditor = () => {
     await supabase
       .from("profiles")
       .update({ username })
-      .eq("id", auth.user.id);
+      .eq("user_id", auth.user.id);   // ✅ FIXED: use user_id
 
     navigate("/profile");
   };
