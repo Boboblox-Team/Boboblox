@@ -16,6 +16,7 @@ import Cutscene from "./pages/Cutscene";
 import Story from "./pages/Story";
 import Characters from "./pages/Characters";
 import Worlds from "./pages/Worlds";
+import WorldExplorer from "./pages/WorldExplorer";
 import CreatorCode from "./pages/CreatorCode";
 import Cutscenes from "./pages/Cutscenes";
 import OAuthConsent from "./pages/OAuthConsent";
@@ -46,6 +47,7 @@ const App = () => (
           <Route path="/creator-code" element={<CreatorCode />} />
           <Route path="/cutscenes" element={<Cutscenes />} />
           <Route path="/cutscene/:id" element={<Cutscene />} />
+          <Route path="/worlds/explore" element={<WorldExplorer />} />
 
           <Route path="/profile" element={<Profile />} />
           <Route path="/profile/edit" element={<ProfileEditor />} />
