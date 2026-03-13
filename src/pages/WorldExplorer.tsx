@@ -7,9 +7,6 @@ import { useAuth } from "@/hooks/useAuth";
 import { usePresence } from "@/hooks/usePresence";
 import WorldScene from "@/components/world-explorer/WorldScene";
 
-// ✅ Correct Supabase client for Lovable
-import { supabase } from "@/integrations/supabase/client";
-
 const worldDetails: Record<string, {
   description: string;
   features: string[];
@@ -46,14 +43,10 @@ const WorldExplorer = () => {
 
   const details = selectedIsland ? worldDetails[selectedIsland] : null;
 
-  // ⭐ NEW: Link player to island in Supabase
-  async function joinIsland(island: string) {
-    if (!user) return;
-
-    await supabase
-      .from("players")
-      .update({ island })
-      .eq("user_id", user.id);
+  // ⭐ NEW: Navigate to island play page
+  function goToIsland(island: string) {
+    const encoded = encodeURIComponent(island);
+    navigate(`/worlds/play/${encoded}`);
   }
 
   return (
@@ -74,7 +67,7 @@ const WorldExplorer = () => {
             selectedIsland={selectedIsland}
             onSelectIsland={(island) => {
               setSelectedIsland(island);
-              joinIsland(island); // ⭐ Linking to Supabase
+              goToIsland(island); // ⭐ Navigate to play page
             }}
             otherPlayers={otherPlayers}
           />
