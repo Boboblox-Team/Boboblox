@@ -7,42 +7,6 @@ import { useAuth } from "@/hooks/useAuth";
 import { usePresence } from "@/hooks/usePresence";
 import WorldScene from "@/components/world-explorer/WorldScene";
 
-const worldDetails: Record<
-  string,
-  {
-    description: string;
-    features: string[];
-    cutsceneId?: string;
-  }
-> = {
-  "Tropical Island": {
-    description:
-      "Golden sands, swaying palms, and crystal waters — the starting point for all Explorers.",
-    features: ["Peaceful beaches", "Palm forests", "Hidden caves", "Starter quests"],
-    cutsceneId: "the-core-awakens",
-  },
-  "City Center": {
-    description:
-      "A bustling urban environment with tall buildings and busy streets, home to many Bloxlings.",
-    features: ["Tall skyscrapers", "Busy streets", "Underground tunnels", "Tech puzzles"],
-  },
-  "Snowy Mountains": {
-    description:
-      "Frozen peaks and icy caves, home to resilient Guardian Bloxlings protecting ancient secrets.",
-    features: ["Frozen peaks", "Ice caves", "Aurora lights", "Guardian quests"],
-  },
-  "Desert Dunes": {
-    description:
-      "Endless golden sands hiding ancient secrets. Scout Bloxlings search for code fragments.",
-    features: ["Ancient ruins", "Hidden oases", "Sandstorms", "Fragment hunts"],
-  },
-  "Forest Adventure": {
-    description:
-      "Dense woodland filled with mysteries. Archivist Bloxlings guard ancient lore in tree-top libraries.",
-    features: ["Dense canopy", "Hidden trails", "Tree houses", "Lore discoveries"],
-  },
-};
-
 const WorldExplorer = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -115,19 +79,39 @@ const WorldExplorer = () => {
         </div>
       </motion.div>
 
-      {/* ⭐ ISLAND BUTTONS USING <Link> ⭐ */}
+      {/* ⭐ CLEAN ISLAND BUTTONS USING <Link> ⭐ */}
       <div className="absolute left-4 top-24 z-20 space-y-3 pointer-events-auto">
-        {Object.keys(worldDetails).map((island) => (
-          <Link
-            key={island}
-            to={`/worlds/play/${encodeURIComponent(island)}`}
-            className="block"
-          >
-            <button className="px-4 py-2 bg-primary text-white rounded-lg shadow hover:bg-primary/80 transition w-48 text-left">
-              {island}
-            </button>
-          </Link>
-        ))}
+
+        <Link to="/worlds/play/TropicalIsland" className="block">
+          <div className="px-4 py-2 bg-primary text-white rounded-lg shadow hover:bg-primary/80 transition w-48">
+            Tropical Island
+          </div>
+        </Link>
+
+        <Link to="/worlds/play/CityCenter" className="block">
+          <div className="px-4 py-2 bg-primary text-white rounded-lg shadow hover:bg-primary/80 transition w-48">
+            City Center
+          </div>
+        </Link>
+
+        <Link to="/worlds/play/SnowyMountains" className="block">
+          <div className="px-4 py-2 bg-primary text-white rounded-lg shadow hover:bg-primary/80 transition w-48">
+            Snowy Mountains
+          </div>
+        </Link>
+
+        <Link to="/worlds/play/DesertDunes" className="block">
+          <div className="px-4 py-2 bg-primary text-white rounded-lg shadow hover:bg-primary/80 transition w-48">
+            Desert Dunes
+          </div>
+        </Link>
+
+        <Link to="/worlds/play/ForestAdventure" className="block">
+          <div className="px-4 py-2 bg-primary text-white rounded-lg shadow hover:bg-primary/80 transition w-48">
+            Forest Adventure
+          </div>
+        </Link>
+
       </div>
     </div>
   );
