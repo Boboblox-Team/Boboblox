@@ -22,6 +22,9 @@ import Cutscenes from "./pages/Cutscenes";
 import OAuthConsent from "./pages/OAuthConsent";
 import OAuthCallback from "./pages/OAuthCallback";
 
+// Islands
+import TropicalIsland from "./pages/islands/TropicalIsland";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -38,7 +41,7 @@ const App = () => (
           <Route path="/oauth/consent" element={<OAuthConsent />} />
           <Route path="/oauth/callback" element={<OAuthCallback />} />
           <Route path="/shop" element={<Shop />} />
-          
+
           {/* Lore & Story Pages */}
           <Route path="/lore" element={<Lore />} />
           <Route path="/story" element={<Story />} />
@@ -48,6 +51,9 @@ const App = () => (
           <Route path="/cutscenes" element={<Cutscenes />} />
           <Route path="/cutscene/:id" element={<Cutscene />} />
           <Route path="/worlds/explore" element={<WorldExplorer />} />
+
+          {/* Island Play Route */}
+          <Route path="/worlds/play/Tropical%20Island" element={<TropicalIsland />} />
 
           <Route path="/profile" element={<Profile />} />
           <Route path="/profile/edit" element={<ProfileEditor />} />
