@@ -12,11 +12,12 @@ interface OtherPlayer {
 }
 
 interface WorldSceneProps {
-  selectedIsland: string | null;
-  onSelectIsland: (name: string) => void;
-  otherPlayers: OtherPlayer[];
+  selectedIsland?: string | null;
+  onSelectIsland?: (name: string) => void;
+  otherPlayers?: OtherPlayer[];
 }
 
+// Island definitions
 const islands = [
   { name: "Tropical Island", icon: "🏝️", color: "#06b6d4", position: [0, 0, 0] as [number, number, number], size: 1.2 },
   { name: "City Center", icon: "🏙️", color: "#3b82f6", position: [5, 0, -3] as [number, number, number], size: 1.0 },
@@ -25,7 +26,11 @@ const islands = [
   { name: "Forest Adventure", icon: "🌲", color: "#22c55e", position: [-4, 0, 4] as [number, number, number], size: 1.1 },
 ];
 
-const WorldScene = ({ selectedIsland, onSelectIsland, otherPlayers }: WorldSceneProps) => {
+const WorldScene = ({
+  selectedIsland = null,
+  onSelectIsland = () => {},
+  otherPlayers = [],
+}: WorldSceneProps) => {
   return (
     <Canvas
       camera={{ position: [0, 8, 12], fov: 50 }}
