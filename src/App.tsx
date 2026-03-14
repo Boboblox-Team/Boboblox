@@ -53,7 +53,7 @@ const App = () => (
           <Route path="/worlds/explore" element={<WorldExplorer />} />
 
           {/* Island Play Route */}
-          <Route path="/worlds/play/Tropical%20Island" element={<TropicalIsland />} />
+          <Route path="/worlds/play/TropicalIsland" element={<TropicalIsland />} />
 
           <Route path="/profile" element={<Profile />} />
           <Route path="/profile/edit" element={<ProfileEditor />} />
