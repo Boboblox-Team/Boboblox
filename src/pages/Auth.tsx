@@ -115,6 +115,7 @@ const Auth = () => {
           await supabase.from("profiles").insert({
             user_id: data.user.id,
             username,
+            email: data.user.email ?? "",
           });
         }
 
