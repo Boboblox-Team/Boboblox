@@ -88,16 +88,14 @@ export const useIslandPresence = (channelName: string) => {
           position: startPos,
         });
 
-        // Notify external join endpoint
+        // Notify external join endpoint without triggering browser preflight
         try {
-          const { data: sessionData } = await supabase.auth.getSession();
-          const accessToken = sessionData?.session?.access_token;
           await fetch("https://girurweqftroscythxje.supabase.co/functions/v1/join", {
             method: "POST",
+            mode: "no-cors",
+            keepalive: true,
             headers: {
-              "Content-Type": "application/json",
-              ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
-              apikey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdpcnVyd2VxZnRyb3NjeXRoeGplIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEwNzg5MjIsImV4cCI6MjA4NjY1NDkyMn0.NMsyx9RHaSTCtPvvpzwr-1ClZHO0l81OClgQNEJ6p2Q",
+              "Content-Type": "text/plain",
             },
             body: JSON.stringify({
               userId: user.id,
