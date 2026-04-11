@@ -71,6 +71,14 @@ export const useIslandPresence = (channelName: string) => {
       setOnlineCount(Object.keys(state).length);
     });
 
+    ch.on("presence", { event: "join" }, ({ newPresences }) => {
+      console.log("[tropical_island] player joined:", newPresences);
+    });
+
+    ch.on("presence", { event: "leave" }, ({ leftPresences }) => {
+      console.log("[tropical_island] player left:", leftPresences);
+    });
+
     ch.subscribe(async (status) => {
       if (status === "SUBSCRIBED") {
         await ch.track({
@@ -79,6 +87,22 @@ export const useIslandPresence = (channelName: string) => {
           color,
           position: startPos,
         });
+
+        // Notify external join endpoint
+        try {
+          await fetch("https://girurweqftroscythxje.supabase.co/functions/v1/join", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              userId: user.id,
+              username,
+              color,
+              channel: channelName,
+            }),
+          });
+        } catch (err) {
+          console.warn("[tropical_island] join call failed:", err);
+        }
       }
     });
 
