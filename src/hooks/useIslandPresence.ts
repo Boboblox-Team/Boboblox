@@ -88,22 +88,28 @@ export const useIslandPresence = (channelName: string) => {
           position: startPos,
         });
 
-        // Notify external join endpoint without triggering browser preflight
+        // Notify join via proxy edge function (avoids CORS preflight)
         try {
-          await fetch("https://girurweqftroscythxje.supabase.co/functions/v1/join", {
-            method: "POST",
-            mode: "no-cors",
-            keepalive: true,
-            headers: {
-              "Content-Type": "text/plain",
-            },
-            body: JSON.stringify({
-              userId: user.id,
-              username,
-              color,
-              channel: channelName,
-            }),
-          });
+          const { data: sessionData } = await supabase.auth.getSession();
+          const accessToken = sessionData?.session?.access_token;
+          if (accessToken) {
+            const projectId = import.meta.env.VITE_SUPABASE_PROJECT_ID;
+            await fetch(
+              `https://${projectId}.supabase.co/functions/v1/island-join`,
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${accessToken}`,
+                },
+                body: JSON.stringify({
+                  username,
+                  color,
+                  channel: channelName,
+                }),
+              }
+            );
+          }
         } catch (err) {
           console.warn("[tropical_island] join call failed:", err);
         }
