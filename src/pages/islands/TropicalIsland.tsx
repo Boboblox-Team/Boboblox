@@ -15,7 +15,7 @@ export default function TropicalIsland() {
   const navigate = useNavigate();
   const { user } = useAuth();
   const { otherPlayers, onlineCount, updatePosition, myColor } =
-    useIslandPresence("tropical-island");
+    useIslandPresence("tropical_island");
 
   const handleLeave = useCallback(() => {
     navigate("/worlds");
