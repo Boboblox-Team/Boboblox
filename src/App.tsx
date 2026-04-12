@@ -24,6 +24,10 @@ import OAuthCallback from "./pages/OAuthCallback";
 
 // Islands
 import TropicalIsland from "./pages/islands/TropicalIsland";
+import CityIsland from "./pages/islands/CityIsland";
+import SnowyIsland from "./pages/islands/SnowyIsland";
+import DesertIsland from "./pages/islands/DesertIsland";
+import ForestIsland from "./pages/islands/ForestIsland";
 
 const queryClient = new QueryClient();
 
@@ -52,8 +56,12 @@ const App = () => (
           <Route path="/cutscene/:id" element={<Cutscene />} />
           <Route path="/worlds/explore" element={<WorldExplorer />} />
 
-          {/* Island Play Route */}
+          {/* Island Play Routes */}
           <Route path="/worlds/play/TropicalIsland" element={<TropicalIsland />} />
+          <Route path="/worlds/play/CityCenter" element={<CityIsland />} />
+          <Route path="/worlds/play/SnowyMountains" element={<SnowyIsland />} />
+          <Route path="/worlds/play/DesertDunes" element={<DesertIsland />} />
+          <Route path="/worlds/play/ForestAdventure" element={<ForestIsland />} />
 
           <Route path="/profile" element={<Profile />} />
           <Route path="/profile/edit" element={<ProfileEditor />} />
