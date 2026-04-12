@@ -15,6 +15,7 @@ const Worlds = () => {
       icon: "🏝️",
       color: "bg-cyan-500/10 border-cyan-500/30",
       cutsceneId: "the-core-awakens",
+      slug: "TropicalIsland",
     },
     {
       name: "City Center",
@@ -22,6 +23,7 @@ const Worlds = () => {
       features: ["Tall skyscrapers", "Busy streets", "Underground tunnels", "Tech puzzles"],
       icon: "🏙️",
       color: "bg-blue-500/10 border-blue-500/30",
+      slug: "CityCenter",
     },
     {
       name: "Snowy Mountains",
@@ -29,6 +31,7 @@ const Worlds = () => {
       features: ["Frozen peaks", "Ice caves", "Aurora lights", "Guardian quests"],
       icon: "🏔️",
       color: "bg-slate-500/10 border-slate-500/30",
+      slug: "SnowyMountains",
     },
     {
       name: "Desert Dunes",
@@ -36,6 +39,7 @@ const Worlds = () => {
       features: ["Ancient ruins", "Hidden oases", "Sandstorms", "Fragment hunts"],
       icon: "🏜️",
       color: "bg-yellow-500/10 border-yellow-500/30",
+      slug: "DesertDunes",
     },
     {
       name: "Forest Adventure",
@@ -43,6 +47,7 @@ const Worlds = () => {
       features: ["Dense canopy", "Hidden trails", "Tree houses", "Lore discoveries"],
       icon: "🌲",
       color: "bg-green-500/10 border-green-500/30",
+      slug: "ForestAdventure",
     },
   ];
 
