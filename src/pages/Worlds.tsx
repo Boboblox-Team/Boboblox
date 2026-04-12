@@ -178,12 +178,24 @@ const Worlds = () => {
                       e.stopPropagation();
                       navigate(`/cutscene/${world.cutsceneId}`);
                     }}
-                    className="w-full gap-1.5 border-primary/50 text-primary hover:bg-primary/10"
+                    className="w-full gap-1.5 border-primary/50 text-primary hover:bg-primary/10 mb-2"
                   >
                     <Play className="w-3.5 h-3.5" />
                     Watch Cut-Scene
                   </Button>
                 )}
+
+                <Button
+                  size="sm"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    navigate(`/worlds/play/${world.slug}`);
+                  }}
+                  className="w-full gap-1.5"
+                >
+                  <Play className="w-3.5 h-3.5" />
+                  Enter World
+                </Button>
               </motion.div>
             ))}
           </div>
