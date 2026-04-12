@@ -25,7 +25,7 @@ import OAuthCallback from "./pages/OAuthCallback";
 // Islands
 import TropicalIsland from "./pages/islands/TropicalIsland";
 import CityIsland from "./pages/islands/CityIsland";
-import SnowyIsland from "./pages/islands/SnowyIsland";
+import SnowyIsland from "./pages/islands/SnowyMountains";
 import DesertIsland from "./pages/islands/DesertIsland";
 import ForestIsland from "./pages/islands/ForestIsland";
 
