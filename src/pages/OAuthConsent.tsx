@@ -91,7 +91,7 @@ const OAuthConsent = () => {
       if (codeChallengeMethod) params.set("code_challenge_method", codeChallengeMethod);
       params.set("consent", "approved");
 
-      window.location.href = `https://girurweqftroscythxje.supabase.co/auth/v1/authorize?${params.toString()}`;
+      window.location.href = `https://girurweqftroscythxje.supabase.co/auth/v1/authorize/oauth?${params.toString()}`;
     } catch {
       setLoading(false);
     }
