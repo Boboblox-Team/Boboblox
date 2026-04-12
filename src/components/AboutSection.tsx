@@ -35,7 +35,7 @@ const AboutSection = () => {
                 </a>
               </Button>
               <Button variant="outline" asChild>
-                <a href="https://github.com/Boboblox-Team/Boboblox-website" target="_blank" rel="noopener noreferrer">
+                <a href="https://github.com/Boboblox-Team/Boboblox" target="_blank" rel="noopener noreferrer">
                   Source Code
                   <ArrowUpRight className="ml-2 w-4 h-4" />
                 </a>
