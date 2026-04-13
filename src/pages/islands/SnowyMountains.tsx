@@ -11,7 +11,7 @@ import IslandHUD from "@/components/island/IslandHUD";
 import { useIslandPresence } from "@/hooks/useIslandPresence";
 import { useAuth } from "@/hooks/useAuth";
 
-export default function SnowyIsland() {
+export default function SnowyMountains() {
   const navigate = useNavigate();
   const { user } = useAuth();
   const { otherPlayers, onlineCount, updatePosition, myColor } =
