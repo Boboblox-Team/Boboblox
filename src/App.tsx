@@ -24,10 +24,10 @@ import OAuthCallback from "./pages/OAuthCallback";
 
 // Islands
 import TropicalIsland from "./pages/islands/TropicalIsland";
-import CityIsland from "./pages/islands/CityIsland";
+import CityIsland from "./pages/islands/CityCentre";
 import SnowyIsland from "./pages/islands/SnowyMountains";
-import DesertIsland from "./pages/islands/DesertIsland";
-import ForestIsland from "./pages/islands/ForestIsland";
+import DesertIsland from "./pages/islands/DesertDunes";
+import ForestIsland from "./pages/islands/ForestAdventure";
 
 const queryClient = new QueryClient();
 
