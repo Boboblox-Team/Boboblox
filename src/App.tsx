@@ -24,10 +24,10 @@ import OAuthCallback from "./pages/OAuthCallback";
 
 // Islands
 import TropicalIsland from "./pages/islands/TropicalIsland";
-import CityIsland from "./pages/islands/CityCentre";
-import SnowyIsland from "./pages/islands/SnowyMountains";
-import DesertIsland from "./pages/islands/DesertDunes";
-import ForestIsland from "./pages/islands/ForestAdventure";
+import CityCentre from "./pages/islands/CityCentre";
+import SnowyMountains from "./pages/islands/SnowyMountains";
+import DesertDunes from "./pages/islands/DesertDunes";
+import ForestAdventure from "./pages/islands/ForestAdventure";
 
 const queryClient = new QueryClient();
 
@@ -58,10 +58,10 @@ const App = () => (
 
           {/* Island Play Routes */}
           <Route path="/worlds/play/TropicalIsland" element={<TropicalIsland />} />
-          <Route path="/worlds/play/CityCenter" element={<CityIsland />} />
-          <Route path="/worlds/play/SnowyMountains" element={<SnowyIsland />} />
-          <Route path="/worlds/play/DesertDunes" element={<DesertIsland />} />
-          <Route path="/worlds/play/ForestAdventure" element={<ForestIsland />} />
+          <Route path="/worlds/play/CityCenter" element={<CityCentre />} />
+          <Route path="/worlds/play/SnowyMountains" element={<SnowyMountains />} />
+          <Route path="/worlds/play/DesertDunes" element={<DesertDunes />} />
+          <Route path="/worlds/play/ForestAdventure" element={<ForestAdventure />} />
 
           <Route path="/profile" element={<Profile />} />
           <Route path="/profile/edit" element={<ProfileEditor />} />
