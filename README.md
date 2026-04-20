@@ -21,7 +21,6 @@ Players can:
 - 💰 Buy Bobobux with real money
 - 🎁 Unlock items and accessories
 - 📖 Discover the Boboblox lore and story
-- 👨‍👩‍👧 Play safely with parental supervision
 
 ---
 
@@ -141,19 +140,6 @@ All purchases are handled through **Google Account Supervision**:
 
 > [!CAUTION]
 > Kids cannot buy Bobobux unless their parent approves the purchase.
-
----
-
-## 🛡️ Parental Safety Features
-
-| Safety Feature | Purpose |
-|----------------|---------|
-| **Spending Limits** | Parents set maximum purchase amounts |
-| **Purchase Alerts** | Instant notifications |
-| **Google‑Managed Checkout** | All payments handled by Google |
-| **Parent Approval Required** | Kids must ask before buying |
-| **Safe Chat** | Filtered and monitored |
-| **No Unsafe Content** | All games are kid‑friendly |
 
 ---
 
