@@ -4,7 +4,7 @@ const features = [
   {
     icon: Shield,
     title: "Kid-Safe Gaming",
-    description: "Designed for ages 7+ with enhanced safety features, chat filters, and parental controls to keep young players protected."
+    description: "Designed for ages 7+ with enhanced safety features, chat filters, and safety controls to keep young players protected."
   },
   {
     icon: Coins,

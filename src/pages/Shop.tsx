@@ -173,7 +173,7 @@ const Shop = () => {
                   Safe & Secure Purchasing
                 </h3>
                 <p className="text-muted-foreground text-sm">
-                  Parents can set spending limits in the dashboard.
+                  All transactions are secure and protected.
                 </p>
               </div>
             </div>
@@ -209,10 +209,10 @@ const Shop = () => {
             <div className="text-center p-6">
               <TrendingUp className="w-10 h-10 text-primary mx-auto mb-3" />
               <h4 className="font-display font-bold text-foreground mb-2">
-                Parental Controls
+                Account Management
               </h4>
               <p className="text-muted-foreground text-sm">
-                Parents can manage and limit spending easily
+                Manage your account settings and preferences easily
               </p>
             </div>
           </div>
