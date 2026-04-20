@@ -61,7 +61,7 @@ const AboutSection = () => {
                     Safe Gaming for Kids
                   </h3>
                   <p className="text-muted-foreground">
-                    Ages 7+ • Parental Controls
+                    Ages 7+ • Safety Controls
                   </p>
                 </div>
               </div>
