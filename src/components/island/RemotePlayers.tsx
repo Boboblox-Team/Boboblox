@@ -2,14 +2,14 @@ import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import { Html } from "@react-three/drei";
 import * as THREE from "three";
-import type { PresencePlayer } from "@/hooks/usePresence";
+import type { IslandPlayer } from "@/hooks/useIslandPresence";
 
 interface RemotePlayersProps {
-  players: PresencePlayer[];
+  players: IslandPlayer[];
 }
 
 interface RemoteAvatarProps {
-  player: PresencePlayer;
+  player: IslandPlayer;
 }
 
 function RemoteAvatar({ player }: RemoteAvatarProps) {
