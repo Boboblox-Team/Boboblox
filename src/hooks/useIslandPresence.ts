@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "./useAuth";
 import type { RealtimeChannel } from "@supabase/supabase-js";
@@ -28,7 +28,12 @@ export const useIslandPresence = (channelName: string) => {
   const [otherPlayers, setOtherPlayers] = useState<IslandPlayer[]>([]);
   const [onlineCount, setOnlineCount] = useState(0);
   const [myColor, setMyColor] = useState("#10b981");
-  const [channel, setChannel] = useState<RealtimeChannel | null>(null);
+
+  // Refs so updatePosition always has the freshest channel/user
+  const channelRef = useRef<RealtimeChannel | null>(null);
+  const subscribedRef = useRef(false);
+  const userRef = useRef(user);
+  userRef.current = user;
 
   useEffect(() => {
     if (!user) return;
@@ -42,9 +47,12 @@ export const useIslandPresence = (channelName: string) => {
 
     const startPos: [number, number, number] = [0, 1, 8];
 
-    const ch = supabase.channel(channelName, {
+    const ch = supabase.channel(`island:${channelName}`, {
       config: { presence: { key: user.id } },
     });
+
+    channelRef.current = ch;
+    subscribedRef.current = false;
 
     ch.on("presence", { event: "sync" }, () => {
       const state = ch.presenceState<{
@@ -58,7 +66,7 @@ export const useIslandPresence = (channelName: string) => {
       for (const [key, presences] of Object.entries(state)) {
         if (key === user.id) continue;
         const p = presences[0];
-        if (p) {
+        if (p && p.position) {
           players.push({
             userId: p.userId,
             username: p.username,
@@ -71,73 +79,55 @@ export const useIslandPresence = (channelName: string) => {
       setOnlineCount(Object.keys(state).length);
     });
 
-    ch.on("presence", { event: "join" }, ({ newPresences }) => {
-      console.log("[tropical_island] player joined:", newPresences);
+    ch.on("presence", { event: "join" }, ({ key, newPresences }) => {
+      console.log(`[${channelName}] joined:`, key, newPresences);
     });
 
-    ch.on("presence", { event: "leave" }, ({ leftPresences }) => {
-      console.log("[tropical_island] player left:", leftPresences);
+    ch.on("presence", { event: "leave" }, ({ key, leftPresences }) => {
+      console.log(`[${channelName}] left:`, key, leftPresences);
     });
 
     ch.subscribe(async (status) => {
+      console.log(`[${channelName}] channel status:`, status);
       if (status === "SUBSCRIBED") {
-        await ch.track({
+        subscribedRef.current = true;
+        const trackResult = await ch.track({
           userId: user.id,
           username,
           color,
           position: startPos,
         });
-
-        // Notify join via proxy edge function (avoids CORS preflight)
-        try {
-          const { data: sessionData } = await supabase.auth.getSession();
-          const accessToken = sessionData?.session?.access_token;
-          if (accessToken) {
-            const projectId = import.meta.env.VITE_SUPABASE_PROJECT_ID;
-            await fetch(
-              `https://${projectId}.supabase.co/functions/v1/island-join`,
-              {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                  Authorization: `Bearer ${accessToken}`,
-                },
-                body: JSON.stringify({
-                  username,
-                  color,
-                  channel: channelName,
-                }),
-              }
-            );
-          }
-        } catch (err) {
-          console.warn("[tropical_island] join call failed:", err);
-        }
+        console.log(`[${channelName}] initial track:`, trackResult);
+      } else if (status === "CHANNEL_ERROR" || status === "TIMED_OUT") {
+        console.error(`[${channelName}] subscription failed:`, status);
+        subscribedRef.current = false;
       }
     });
 
-    setChannel(ch);
-
     return () => {
-      ch.unsubscribe();
+      subscribedRef.current = false;
+      channelRef.current = null;
+      supabase.removeChannel(ch);
     };
-  }, [user, channelName]);
+  }, [user?.id, channelName]);
 
   const updatePosition = useCallback(
     async (position: [number, number, number]) => {
-      if (!channel || !user) return;
+      const ch = channelRef.current;
+      const u = userRef.current;
+      if (!ch || !u || !subscribedRef.current) return;
+
       const username =
-        user.user_metadata?.username ||
-        user.email?.split("@")[0] ||
-        "Explorer";
-      await channel.track({
-        userId: user.id,
+        u.user_metadata?.username || u.email?.split("@")[0] || "Explorer";
+
+      await ch.track({
+        userId: u.id,
         username,
-        color: pickColor(user.id),
+        color: pickColor(u.id),
         position,
       });
     },
-    [channel, user]
+    []
   );
 
   return { otherPlayers, onlineCount, updatePosition, myColor };
